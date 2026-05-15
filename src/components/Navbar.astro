@@ -1,0 +1,59 @@
+---
+
+---
+
+<nav>
+      <div class="nav-logo">CONSUMED</div>
+      <div class="nav-sdg">SDG 12 — RESPONSIBLE CONSUMPTION</div>
+</nav>
+
+<style>
+      nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 22px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(-50px);
+      }
+
+      body:not(.dark-mode) nav * {
+            opacity: 0;
+            transition:
+                  opacity 0.3s 1.5s,
+                  transform 1s 1.5s;
+      }
+
+      body.dark-mode nav {
+            transition:
+                  opacity 0.3s 1.5s,
+                  transform 1s 1.5s;
+            opacity: 1;
+            transform: translateY(0);
+      }
+
+      .nav-logo {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 22px;
+            letter-spacing: 8px;
+            color: var(--text-light);
+            opacity: 0.7;
+      }
+      .nav-sdg {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--muted-warm);
+            opacity: 1;
+      }
+      @media (max-width: 900px) {
+            nav {
+                  padding: 20px 24px;
+            }
+      }
+</style>

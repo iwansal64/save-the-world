@@ -1,0 +1,342 @@
+<style>
+      /* ═══════════════════════════════════════════════════════
+   SECTION 7 — THE PLEDGE
+═══════════════════════════════════════════════════════ */
+      #pledge {
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+            padding: 160px 0;
+      }
+      #pledge::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(ellipse, rgba(45, 138, 78, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+      }
+
+      /* Tear top */
+      .pledge-tear {
+            position: relative;
+            height: 80px;
+            background: var(--cream);
+            overflow: visible;
+            z-index: 30;
+      }
+      .pledge-tear svg {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+      }
+
+      .pledge-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+      }
+      .pledge-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 6px;
+            color: var(--green-light);
+            margin-bottom: 40px;
+      }
+      .pledge-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(32px, 5vw, 60px);
+            font-weight: 900;
+            color: var(--text-light);
+            line-height: 1.15;
+            margin-bottom: 20px;
+      }
+      .pledge-title em {
+            color: var(--green-light);
+            font-style: italic;
+      }
+      .pledge-sub {
+            font-family: "Lora", serif;
+            font-size: 15px;
+            color: rgba(240, 237, 232, 0.4);
+            margin-bottom: 64px;
+            line-height: 1.7;
+            font-style: italic;
+      }
+
+      /* Pledge options */
+      .pledge-options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 48px;
+      }
+      .pledge-opt {
+            background: transparent;
+            border: 1px solid #1e1e1e;
+            padding: 28px 32px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+      }
+      .pledge-opt::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(45, 138, 78, 0.04);
+            opacity: 0;
+            transition: opacity 0.3s;
+      }
+      .pledge-opt:hover::before {
+            opacity: 1;
+      }
+      .pledge-opt:hover {
+            border-color: rgba(45, 138, 78, 0.4);
+            transform: translateX(8px);
+      }
+      .pledge-opt.selected {
+            border-color: var(--green-light);
+            background: #0d180d;
+      }
+      .pledge-opt.selected .pledge-opt-icon {
+            background: rgba(45, 138, 78, 0.2);
+            border-color: rgba(45, 138, 78, 0.4);
+      }
+      .pledge-opt.dimmed {
+            opacity: 0.25;
+      }
+      .pledge-opt-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+      }
+      .pledge-opt-content {
+      }
+      .pledge-opt-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 22px;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            line-height: 1;
+            margin-bottom: 6px;
+      }
+      .pledge-opt-desc {
+            font-family: "Lora", serif;
+            font-size: 13px;
+            color: rgba(240, 237, 232, 0.4);
+            line-height: 1.6;
+            transition: color 0.3s;
+      }
+      .pledge-opt:hover .pledge-opt-desc,
+      .pledge-opt.selected .pledge-opt-desc {
+            color: rgba(240, 237, 232, 0.65);
+      }
+
+      /* Pledge expanded letter */
+      .pledge-letter {
+            display: none;
+            background: #0d180d;
+            border: 1px solid rgba(45, 138, 78, 0.2);
+            padding: 48px 40px;
+            margin-bottom: 40px;
+            position: relative;
+            text-align: left;
+            opacity: 0;
+            transition: opacity 0.6s;
+      }
+      .pledge-letter.show {
+            display: block;
+      }
+      .pledge-letter.visible {
+            opacity: 1;
+      }
+      .pledge-letter::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--green), var(--green-light), transparent);
+      }
+      .pledge-letter-text {
+            font-family: "Lora", serif;
+            font-size: 16px;
+            line-height: 2;
+            color: rgba(240, 237, 232, 0.7);
+            font-style: italic;
+      }
+      .pledge-letter-text strong {
+            color: var(--green-light);
+            font-style: normal;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 12px;
+      }
+
+      /* Final message */
+      .pledge-finale {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.8s;
+      }
+      .pledge-finale.show {
+            display: block;
+      }
+      .pledge-finale.visible {
+            opacity: 1;
+      }
+      .finale-line {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(32px, 5vw, 64px);
+            font-style: italic;
+            font-weight: 900;
+            color: var(--text-light);
+            line-height: 1;
+            margin-bottom: 12px;
+      }
+      .finale-line span {
+            color: var(--green-light);
+      }
+      .finale-sdg {
+            margin-top: 48px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 5px;
+            color: var(--muted-dark);
+      }
+      .finale-sdg a {
+            color: var(--green-light);
+            text-decoration: none;
+      }
+      .finale-sdg a:hover {
+            text-decoration: underline;
+      }
+
+      /* Green glow orb finale */
+      .finale-orb {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(45, 138, 78, 0.2), transparent);
+            margin: 0 auto 32px;
+            display: none;
+            box-shadow: 0 0 60px rgba(45, 138, 78, 0.15);
+            animation: orbPulse 3s ease-in-out infinite;
+      }
+      .finale-orb.show {
+            display: block;
+      }
+      @keyframes orbPulse {
+            0%,
+            100% {
+                  transform: scale(1);
+                  box-shadow: 0 0 60px rgba(45, 138, 78, 0.15);
+            }
+            50% {
+                  transform: scale(1.08);
+                  box-shadow: 0 0 100px rgba(45, 138, 78, 0.25);
+            }
+      }
+</style>
+
+<!-- ════════════════════════════════
+     S7 — THE PLEDGE
+════════════════════════════════ -->
+<div class="pledge-tear">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"
+            ><path
+                  d="M0,0 L0,32 Q70,68 140,40 Q210,12 280,46 Q350,78 420,50 Q490,22 560,52 Q630,80 700,52 Q770,24 840,50 Q910,76 980,50 Q1050,24 1120,50 Q1190,74 1260,44 Q1330,16 1440,38 L1440,80 L0,80 Z"
+                  fill="#080808"></path></svg
+      >
+</div>
+<section id="pledge" class="grain-dark">
+      <div class="pledge-inner">
+            <div class="pledge-eyebrow reveal">// YOUR MOVE</div>
+            <h2 class="pledge-title reveal">You've seen it.<br />You felt it.<br />Now — <em>one thing.</em></h2>
+            <p class="pledge-sub reveal">Not a donation. Not a manifesto. Just one commitment you'll actually keep.</p>
+            <div class="pledge-options reveal" id="pledge-options">
+                  <button class="pledge-opt" data-pledge="repair">
+                        <div class="pledge-opt-icon">🧵</div>
+                        <div class="pledge-opt-content">
+                              <div class="pledge-opt-title">I WILL REPAIR BEFORE I REPLACE.</div><div class="pledge-opt-desc">The next time something breaks, I'll try to fix it first.</div>
+                        </div>
+                  </button>
+                  <button class="pledge-opt" data-pledge="wait">
+                        <div class="pledge-opt-icon">⏱️</div>
+                        <div class="pledge-opt-content">
+                              <div class="pledge-opt-title">I WILL WAIT 48 HOURS.</div><div class="pledge-opt-desc">Before any non-essential purchase, I'll sleep on it. Twice.</div>
+                        </div>
+                  </button>
+                  <button class="pledge-opt" data-pledge="clothes">
+                        <div class="pledge-opt-icon">👕</div>
+                        <div class="pledge-opt-content">
+                              <div class="pledge-opt-title">NO NEW CLOTHES FOR 30 DAYS.</div><div class="pledge-opt-desc">30 days. What I own is enough. Let's find out if that's true.</div>
+                        </div>
+                  </button>
+            </div>
+            <div class="pledge-letter" id="pledge-letter">
+                  <div class="pledge-letter-text" id="pledge-letter-text"></div>
+            </div>
+            <div class="pledge-finale" id="pledge-finale">
+                  <div class="finale-orb show" id="finale-orb"></div>
+                  <div class="finale-line">That's enough.</div>
+                  <div class="finale-line"><span>You're enough.</span></div>
+                  <div class="finale-sdg" style="margin-top:48px">
+                        SDG 12 — RESPONSIBLE CONSUMPTION &amp; PRODUCTION<br />
+                        <a href="https://sdgs.un.org/goals/goal12" target="_blank">LEARN MORE AT UN.ORG →</a>
+                  </div>
+            </div>
+      </div>
+</section>
+
+<script is:inline>
+      /* ═══════════════════════════════ PLEDGE ═══════════════════════════════ */
+      const pledgeLetters = {
+            repair: `<strong>I WILL REPAIR BEFORE I REPLACE.</strong>\n\nThe next time something in my life breaks, I commit to trying to fix it first. Before I search for a replacement. Before I add anything to a cart.\n\nBecause something repaired isn't a compromise — it's a choice. A quiet act of rebellion against a system that profits from our impatience.\n\nOne repair at a time.`,
+            wait: `<strong>I WILL WAIT 48 HOURS.</strong>\n\nBefore any purchase I don't immediately need, I will wait two days. Not to punish myself — but to give my future self a vote.\n\nIf I still want it in 48 hours, maybe I need it. More often than not, the feeling passes. And the money stays where it belongs.\n\nPatience is a radical act.`,
+            clothes: `<strong>NO NEW CLOTHES FOR 30 DAYS.</strong>\n\nFor the next 30 days, what I own is enough. I will wear what I have. I will discover forgotten favourites. I will feel the strange discomfort of not shopping — and sit with it.\n\nBecause the discomfort is the point. It's where change lives.\n\nThirty days. Starting now.`,
+      };
+      document.querySelectorAll(".pledge-opt").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                  const p = btn.dataset.pledge;
+                  document.querySelectorAll(".pledge-opt").forEach((b) => {
+                        b.classList.remove("selected");
+                        b.classList.toggle("dimmed", b.dataset.pledge !== p);
+                  });
+                  btn.classList.add("selected");
+                  btn.classList.remove("dimmed");
+                  const letter = document.getElementById("pledge-letter");
+                  const letterText = document.getElementById("pledge-letter-text");
+                  letter.classList.add("show");
+                  letterText.innerHTML = pledgeLetters[p].replace(/\n/g, "<br>");
+                  setTimeout(() => letter.classList.add("visible"), 50);
+                  // Show finale
+                  setTimeout(() => {
+                        const fin = document.getElementById("pledge-finale");
+                        fin.classList.add("show");
+                        setTimeout(() => fin.classList.add("visible"), 50);
+                  }, 800);
+            });
+      });
+</script>

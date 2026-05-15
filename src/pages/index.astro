@@ -1,17 +1,285 @@
 ---
-
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import TheMirror from "../components/TheMirror.astro";
+import TheNumbers from "../components/TheNumbers.astro";
+import TheQuiz from "../components/TheQuiz.astro";
+import TheLifeCycle from "../components/TheLifeCycle.astro";
+import TheShift from "../components/TheShift.astro";
+import ThePledge from "../components/ThePledge.astro";
+import Footer from "../components/Footer.astro";
 ---
 
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+      <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>CONSUMED — You Are What You Buy</title>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+            <link
+                  href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap"
+                  rel="stylesheet"
+            />
+
+            <style>
+                  /* ─── RESET & ROOT ──────────────────────────────────────────────────── */
+                  *,
+                  *::before,
+                  *::after {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        cursor: none !important;
+                  }
+                  html {
+                        scroll-behavior: smooth;
+                  }
+
+                  :root {
+                        /* Warm palette */
+                        --cream: #f5ecd7;
+                        --cream2: #efe3c8;
+                        --sand: #e0cba8;
+                        --sand2: #c9b48a;
+                        --warm-brown: #5c3d1e;
+                        --forest: #1c2e1c;
+                        --green: #2d8a4e;
+                        --green-light: #4caf72;
+                        --green-glow: rgba(45, 138, 78, 0.15);
+                        /* Dark palette */
+                        --black: #080808;
+                        --charcoal: #111111;
+                        --amber: #ff8c00;
+                        --ember: #ff4500;
+                        --amber-glow: rgba(255, 140, 0, 0.12);
+                        /* Text */
+                        --text-dark: #1c1410;
+                        --text-light: #f0ede8;
+                        --muted-warm: #9a8468;
+                        --muted-dark: #555;
+                  }
+
+                  body {
+                        background: var(--cream);
+                        color: var(--text-dark);
+                        font-family: "Lora", serif;
+                        overflow-x: hidden;
+                  }
+
+                  /* ─── CUSTOM CURSOR ──────────────────────────────────────────────────── */
+                  #cur {
+                        position: fixed;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--green);
+                        pointer-events: none;
+                        z-index: 99999;
+                        transform: translate(-50%, -50%);
+                        transition:
+                              background 0.4s,
+                              transform 0.15s;
+                        mix-blend-mode: multiply;
+                  }
+                  #cur-ring {
+                        position: fixed;
+                        width: 34px;
+                        height: 34px;
+                        border-radius: 50%;
+                        border: 1.5px solid var(--green);
+                        pointer-events: none;
+                        z-index: 99998;
+                        transform: translate(-50%, -50%);
+                        transition:
+                              width 0.3s,
+                              height 0.3s,
+                              border-color 0.4s,
+                              opacity 0.3s;
+                        opacity: 0.6;
+                  }
+                  body.dark-mode #cur {
+                        background: var(--amber);
+                        mix-blend-mode: screen;
+                  }
+                  body.dark-mode #cur-ring {
+                        border-color: var(--amber);
+                  }
+
+                  /* ─── SCROLL PROGRESS ───────────────────────────────────────────────── */
+                  #spb {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        height: 2px;
+                        width: 0%;
+                        background: linear-gradient(90deg, var(--green), var(--amber));
+                        z-index: 9999;
+                        box-shadow: 0 0 8px var(--green);
+                        transition: width 0.1s;
+                  }
+
+                  /* ─── GRAIN OVERLAYS ────────────────────────────────────────────────── */
+                  .grain-warm::after,
+                  .grain-dark::after {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        pointer-events: none;
+                        z-index: 10;
+                  }
+                  .grain-warm::after {
+                        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+                        opacity: 0.5;
+                        mix-blend-mode: multiply;
+                  }
+                  .grain-dark::after {
+                        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+                        opacity: 0.4;
+                  }
+
+                  /* ════════════════════════════════════════════════════════════════════
+                    SECTION DIVIDER — TEAR
+                    ════════════════════════════════════════════════════════════════════ */
+                  .tear-divider {
+                        position: relative;
+                        height: 80px;
+                        background: var(--cream);
+                        overflow: visible;
+                        z-index: 30;
+                  }
+                  .tear-divider svg {
+                        position: absolute;
+                        bottom: -1px;
+                        left: 0;
+                        width: 100%;
+                  }
+            </style>
+      </head>
+      <body>
+            <div id="cur"></div>
+            <div id="cur-ring"></div>
+            <div id="spb"></div>
+
+            <Navbar />
+            <Hero />
+
+            <TheMirror />
+            <TheNumbers />
+            <TheQuiz />
+            <TheLifeCycle />
+            <TheShift />
+            <ThePledge />
+            <Footer />
+
+            <script>
+                  // ─── CURSOR ────────────────────────────────────────────────────────────────
+                  const cur = document.getElementById("cur");
+                  const curRing = document.getElementById("cur-ring");
+                  let mx = 0,
+                        my = 0,
+                        rx = window.innerWidth / 2,
+                        ry = window.innerHeight / 2;
+
+                  document.addEventListener("mousemove", (e) => {
+                        mx = e.clientX;
+                        my = e.clientY;
+                        cur!.style.left = `${mx}px`;
+                        cur!.style.top = `${my}px`;
+                  });
+                  (function animRing() {
+                        rx += (mx - rx) * 0.1;
+                        ry += (my - ry) * 0.1;
+                        curRing!.style.left = `${rx}px`;
+                        curRing!.style.top = `${ry}px`;
+                        requestAnimationFrame(animRing);
+                  })();
+
+                  document.querySelectorAll("button, a, .pillar-card, .recog-pill").forEach((el) => {
+                        el.addEventListener("mouseenter", () => {
+                              curRing!.style.width = "56px";
+                              curRing!.style.height = "56px";
+                              cur!.style.transform = "translate(-50%,-50%) scale(1.6)";
+                        });
+                        el.addEventListener("mouseleave", () => {
+                              curRing!.style.width = "34px";
+                              curRing!.style.height = "34px";
+                              cur!.style.transform = "translate(-50%,-50%) scale(1)";
+                        });
+                  });
+
+                  // ─── SCROLL PROGRESS ──────────────────────────────────────────────────────
+                  const spb = document.getElementById("spb");
+                  window.addEventListener("scroll", () => {
+                        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                        spb!.style.width = `${pct}%`;
+                  });
+
+                  /* ═══════════════════════════════ DARK MODE BY SECTION ═══════════════════════════════ */
+                  const warmSections = ["mirror", "shift"];
+                  const allSections = ["mirror", "numbers", "quiz", "lifecycle", "shift", "pledge"];
+                  const sectionObserver = new IntersectionObserver(
+                        (entries) => {
+                              entries.forEach((e) => {
+                                    if (e.isIntersecting) {
+                                          const id = e.target.id;
+                                          document.body.classList.toggle("dark-mode", !warmSections.includes(id));
+                                    }
+                              });
+                        },
+                        { threshold: 0.4 },
+                  );
+                  allSections.forEach((id) => {
+                        const el = document.getElementById(id);
+                        if (el) sectionObserver.observe(el);
+                  });
+
+                  /* ═══════════════════════════════ UNIVERSAL REVEAL OBSERVER ═══════════════════════════════ */
+                  const ro = new IntersectionObserver(
+                        (entries) => {
+                              entries.forEach((e) => {
+                                    if (!e.isIntersecting) return;
+                                    const el = e.target;
+                                    // stagger siblings
+                                    const siblings = [...el.parentElement!.children].filter(
+                                          (c) => c.classList.contains("reveal") || c.classList.contains("reveal-left") || c.classList.contains("reveal-right"),
+                                    );
+                                    const idx = siblings.indexOf(el);
+                                    setTimeout(() => el.classList.add("vis"), idx * 80);
+                                    ro.unobserve(el);
+                              });
+                        },
+                        { threshold: 0.15 },
+                  );
+                  document.querySelectorAll(".reveal,.reveal-left,.reveal-right").forEach((el) => ro.observe(el));
+
+                  /* pillar cards */
+                  const pob = new IntersectionObserver(
+                        (entries) => {
+                              entries.forEach((e) => {
+                                    if (!e.isIntersecting) return;
+                                    const idx = ["pc-0", "pc-1", "pc-2"].indexOf(e.target.id);
+                                    setTimeout(() => e.target.classList.add("vis"), idx * 130);
+                                    pob.unobserve(e.target);
+                              });
+                        },
+                        { threshold: 0.15 },
+                  );
+                  ["pc-0", "pc-1", "pc-2"].forEach((id) => {
+                        const el = document.getElementById(id);
+                        if (el) pob.observe(el);
+                  });
+
+                  /* ═══════════════════════════════ ARCHETYPES ROTATION ═══════════════════════════════ */
+                  const ats = document.querySelectorAll(".archetype-text");
+                  let atI = 0;
+                  ats[0].classList.add("active");
+                  setInterval(() => {
+                        ats[atI].classList.remove("active");
+                        atI = (atI + 1) % ats.length;
+                        ats[atI].classList.add("active");
+                  }, 2000);
+            </script>
+      </body>
 </html>

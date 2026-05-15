@@ -1,0 +1,611 @@
+---
+
+---
+
+<style is:global>
+      /* ═══════════════════════════════════════════════════════
+      SECTION 5 — LIFECYCLE EXPLORER
+      ═══════════════════════════════════════════════════════ */
+      #lifecycle {
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+            padding: 120px 0 160px;
+            border-top: 1px solid #111;
+      }
+
+      .lifecycle-header {
+            text-align: center;
+            padding: 0 24px 60px;
+            position: relative;
+            z-index: 10;
+      }
+      .lifecycle-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 6px;
+            color: var(--green-light);
+            margin-bottom: 20px;
+      }
+      .lifecycle-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(48px, 8vw, 100px);
+            letter-spacing: 4px;
+            color: var(--text-light);
+            line-height: 0.9;
+      }
+      .lifecycle-title span {
+            color: var(--green-light);
+      }
+      .lifecycle-sub {
+            margin-top: 20px;
+            font-family: "Lora", serif;
+            font-size: 15px;
+            color: rgba(240, 237, 232, 0.35);
+            font-style: italic;
+      }
+
+      /* Product picker */
+      .product-picker {
+            display: flex;
+            gap: 2px;
+            max-width: 700px;
+            margin: 0 auto 64px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+      }
+      .prod-btn {
+            flex: 1;
+            background: #0c0c0c;
+            border: 1px solid #1e1e1e;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.3s;
+      }
+      .prod-btn:hover,
+      .prod-btn.active {
+            border-color: var(--green-light);
+            background: #0d180d;
+      }
+      .prod-btn.active {
+            box-shadow: 0 0 20px rgba(76, 175, 114, 0.1);
+      }
+      .prod-emoji {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+      }
+      .prod-name {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(240, 237, 232, 0.4);
+            transition: color 0.3s;
+      }
+      .prod-btn.active .prod-name,
+      .prod-btn:hover .prod-name {
+            color: var(--green-light);
+      }
+
+      /* Lifecycle stages */
+      .lifecycle-track {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+      }
+      .stage-row {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+            padding: 32px 0;
+            border-bottom: 1px solid #111;
+            opacity: 0;
+            transform: translateX(-24px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--sd, 0s);
+      }
+      .stage-row.vis {
+            opacity: 1;
+            transform: translateX(0);
+      }
+      .stage-row.circular {
+            border-color: rgba(45, 138, 78, 0.15);
+      }
+      .stage-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            border: 1px solid #1e1e1e;
+            transition: all 0.4s;
+      }
+      .stage-row:hover .stage-icon {
+            transform: scale(1.1);
+      }
+      .stage-row.linear .stage-icon {
+            background: #0f0f0f;
+            border-color: #1e1e1e;
+      }
+      .stage-row.crisis .stage-icon {
+            background: rgba(255, 69, 0, 0.08);
+            border-color: rgba(255, 69, 0, 0.2);
+      }
+      .stage-row.circular .stage-icon {
+            background: rgba(45, 138, 78, 0.08);
+            border-color: rgba(45, 138, 78, 0.25);
+            box-shadow: 0 0 16px rgba(45, 138, 78, 0.08);
+      }
+      .stage-content {
+            flex: 1;
+      }
+      .stage-label {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 4px;
+            margin-bottom: 6px;
+      }
+      .stage-row.linear .stage-label {
+            color: var(--muted-dark);
+      }
+      .stage-row.crisis .stage-label {
+            color: var(--ember);
+      }
+      .stage-row.circular .stage-label {
+            color: var(--green-light);
+      }
+      .stage-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 26px;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            line-height: 1;
+            margin-bottom: 8px;
+      }
+      .stage-desc {
+            font-family: "Lora", serif;
+            font-size: 13px;
+            color: rgba(240, 237, 232, 0.45);
+            line-height: 1.7;
+      }
+      .stage-desc strong {
+            color: rgba(240, 237, 232, 0.75);
+      }
+      .stage-tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 3px;
+            padding: 4px 10px;
+      }
+      .stage-row.crisis .stage-tag {
+            color: var(--ember);
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            background: rgba(255, 69, 0, 0.04);
+      }
+      .stage-row.circular .stage-tag {
+            color: var(--green-light);
+            border: 1px solid rgba(45, 138, 78, 0.2);
+            background: rgba(45, 138, 78, 0.04);
+      }
+
+      /* circular divider */
+      .circular-divider {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+      }
+      .circ-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(45, 138, 78, 0.4));
+      }
+      .circ-line.right {
+            background: linear-gradient(90deg, rgba(45, 138, 78, 0.4), transparent);
+      }
+      .circ-label {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: var(--green-light);
+            white-space: nowrap;
+      }
+</style>
+
+<!-- ════════════════════════════════
+     S5 — LIFECYCLE EXPLORER
+════════════════════════════════ -->
+<section id="lifecycle" class="grain-dark">
+      <div class="lifecycle-header">
+            <div class="lifecycle-eyebrow reveal">// INTERACTIVE EXPLORER</div>
+            <h2 class="lifecycle-title reveal">WHERE DOES<br /><span>IT ACTUALLY GO?</span></h2>
+            <p class="lifecycle-sub reveal">Pick a product. Follow its life — and its death.</p>
+      </div>
+      <div class="product-picker reveal" id="product-picker">
+            <button class="prod-btn active" data-prod="shirt"><span class="prod-emoji">👕</span><div class="prod-name">T-SHIRT</div></button>
+            <button class="prod-btn" data-prod="food"><span class="prod-emoji">🍔</span><div class="prod-name">BURGER</div></button>
+            <button class="prod-btn" data-prod="phone"><span class="prod-emoji">📱</span><div class="prod-name">SMARTPHONE</div></button>
+            <button class="prod-btn" data-prod="cup"><span class="prod-emoji">☕</span><div class="prod-name">COFFEE CUP</div></button>
+      </div>
+      <div class="lifecycle-track" id="lifecycle-track">
+            <!-- filled by JS -->
+      </div>
+</section>
+
+<script is:inline>
+      /* ═══════════════════════════════ LIFECYCLE EXPLORER ═══════════════════════════════ */
+      const products = {
+            shirt: {
+                  linear: [
+                        {
+                              type: "linear",
+                              icon: "🌱",
+                              stage: "GROWN",
+                              title: "Cotton Fields",
+                              desc: "<strong>2,700 litres of water</strong> to grow the cotton for one t-shirt. That's 2.5 years of drinking water. In one garment.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🏭",
+                              stage: "MANUFACTURED",
+                              title: "Factory Floor",
+                              desc: "Sewn in a factory where the average worker earns <strong>$3 a day.</strong> The shirt will sell for $30. You will feel like you got a deal.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🚢",
+                              stage: "SHIPPED",
+                              title: "15,000km Journey",
+                              desc: "Cargo ship. Diesel. <strong>15,000 kilometres</strong> to reach your country. Before it even hits a store shelf.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🛍️",
+                              stage: "PURCHASED",
+                              title: "You Bought It",
+                              desc: "You wore it. The average fast fashion item is worn <strong>7 times</strong> before being discarded.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "📦",
+                              stage: "FORGOTTEN",
+                              title: "Back of the Wardrobe",
+                              desc: "It sat there for <strong>2.5 years.</strong> You forgot you owned it. It still had its potential. You just ran out of interest.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "🗑️",
+                              stage: "DISCARDED",
+                              title: "Landfill",
+                              desc: "<strong>73% chance</strong> it goes straight to landfill or is incinerated. The journey ends here. Except it doesn't.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "♾️",
+                              stage: "PERSISTS",
+                              title: "200 Years",
+                              desc: "Synthetic fibres take <strong>200 years to decompose.</strong> It will outlive everyone you know. For a shirt worn 7 times.",
+                        },
+                  ],
+                  circular: [
+                        {
+                              type: "circular",
+                              icon: "🧵",
+                              stage: "REPAIRED",
+                              title: "Mended, Not Replaced",
+                              desc: "A loose thread. A torn seam. <strong>Five minutes of repair</strong> adds months of life. It's not a chore. It's an act of resistance.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "💚",
+                              stage: "WORN MORE",
+                              title: "30+ Wears",
+                              desc: "Worn 30 times instead of 7. <strong>4x the value extracted.</strong> The carbon cost per wear drops dramatically.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "🤝",
+                              stage: "DONATED",
+                              title: "Second Life",
+                              desc: "Someone else's favourite shirt. The object continues. <strong>No new resources consumed.</strong> No new emissions.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "♻️",
+                              stage: "RECYCLED",
+                              title: "Material Recovery",
+                              desc: "Broken down. The fibres recovered and <strong>reborn as insulation, rags, or new fabric.</strong> The loop closes.",
+                        },
+                  ],
+            },
+            food: {
+                  linear: [
+                        {
+                              type: "linear",
+                              icon: "🌾",
+                              stage: "GROWN",
+                              title: "Agricultural Land",
+                              desc: "<strong>70% of global freshwater</strong> use goes to agriculture. The land to grow food that won't be eaten.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🏭",
+                              stage: "PROCESSED",
+                              title: "Factory Processing",
+                              desc: "Energy, packaging, refrigeration. <strong>Energy-intensive processing</strong> for food that may never leave the warehouse.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🚛",
+                              stage: "TRANSPORTED",
+                              title: "Cold Chain Logistics",
+                              desc: "Refrigerated trucks. Long supply chains. Food travels an average of <strong>1,500 miles</strong> before it reaches you.",
+                        },
+                        { type: "linear", icon: "🛒", stage: "PURCHASED", title: "You Bought It", desc: "You intended to cook it. You had plans. <strong>Then life happened.</strong>" },
+                        {
+                              type: "crisis",
+                              icon: "🧊",
+                              stage: "FORGOTTEN",
+                              title: "Back of the Fridge",
+                              desc: "Behind the leftovers. Under the yogurt. <strong>The average household wastes $1,500 in food annually.</strong>",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "🗑️",
+                              stage: "THROWN AWAY",
+                              title: "Landfill",
+                              desc: "<strong>33% of all food produced globally is wasted</strong> — while 820 million people go hungry. Every. Single. Day.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "💨",
+                              stage: "METHANE",
+                              title: "Greenhouse Gas",
+                              desc: "Rotting food in landfill produces methane — <strong>a greenhouse gas 80x more potent than CO₂</strong> over 20 years.",
+                        },
+                  ],
+                  circular: [
+                        {
+                              type: "circular",
+                              icon: "🥗",
+                              stage: "EAT IT",
+                              title: "Use What You Buy",
+                              desc: "Meal planning. Shopping lists. <strong>Buying only what you'll actually use.</strong> Revolutionary.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "🍱",
+                              stage: "LEFTOVERS",
+                              title: "Yesterday's Dinner",
+                              desc: "The best meal is the one you already paid for. <strong>Leftovers aren't sad — waste is sad.</strong>",
+                        },
+                        {
+                              type: "circular",
+                              icon: "🌱",
+                              stage: "COMPOSTED",
+                              title: "Back to the Earth",
+                              desc: "What can't be eaten returns to the soil. <strong>Compost closes the nutrient loop</strong> — no methane, just soil enrichment.",
+                        },
+                  ],
+            },
+            phone: {
+                  linear: [
+                        {
+                              type: "linear",
+                              icon: "⛏️",
+                              stage: "MINED",
+                              title: "Rare Earth Minerals",
+                              desc: "Cobalt, lithium, coltan. <strong>Mined in conditions that would shock you.</strong> Your phone contains 62 of the 83 stable elements on the periodic table.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🏭",
+                              stage: "MANUFACTURED",
+                              title: "500+ Components",
+                              desc: "Assembled by workers earning <strong>$1–2 per hour</strong> in factories you'll never see, making a product designed to last 2.5 years.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "📦",
+                              stage: "PACKAGED",
+                              title: "More Packaging Than Device",
+                              desc: "Boxes within boxes. Protective materials. <strong>The packaging often weighs more than the phone itself.</strong>",
+                        },
+                        {
+                              type: "linear",
+                              icon: "📱",
+                              stage: "USED",
+                              title: "2.5 Years",
+                              desc: "The average smartphone is replaced every <strong>2.5 years.</strong> Often because of software slowdowns — not because it broke.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "🗄️",
+                              stage: "DRAWER",
+                              title: "The Drawer",
+                              desc: "<strong>5.3 billion phones are expected to be thrown away in 2023 alone.</strong> Many of them still work. They sit in drawers first.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "☠️",
+                              stage: "E-WASTE",
+                              title: "Toxic Landfill",
+                              desc: "E-waste is the <strong>fastest-growing waste stream on Earth.</strong> Heavy metals leach into soil and groundwater for generations.",
+                        },
+                  ],
+                  circular: [
+                        {
+                              type: "circular",
+                              icon: "🔧",
+                              stage: "REPAIRED",
+                              title: "Fix the Screen. Not the Phone.",
+                              desc: "<strong>80% of smartphone damage is repairable.</strong> A cracked screen doesn't need a new phone. Fairphone proved this.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "⬆️",
+                              stage: "UPGRADED",
+                              title: "Component Replacement",
+                              desc: "Replace only what's broken. New battery, same phone. <strong>The circular phone extends to 7+ years of use.</strong>",
+                        },
+                        {
+                              type: "circular",
+                              icon: "♻️",
+                              stage: "RECLAIMED",
+                              title: "Material Recovery",
+                              desc: "Precious metals recovered. <strong>Recycling one million phones recovers 35,000lbs of copper, 33lbs of palladium, 75lbs of gold, 772lbs of silver.</strong>",
+                        },
+                  ],
+            },
+            cup: {
+                  linear: [
+                        {
+                              type: "linear",
+                              icon: "🌳",
+                              stage: "TREES FELLED",
+                              title: "Virgin Paper Pulp",
+                              desc: "<strong>6.5 million trees</strong> are cut down annually just to make disposable coffee cups. Most cups are lined with plastic — making them unrecyclable.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "🏭",
+                              stage: "MANUFACTURED",
+                              title: "Plastic-Lined",
+                              desc: "The polyethylene lining that keeps your coffee hot <strong>makes the cup impossible to recycle</strong> in most facilities. It's designed to be used once.",
+                        },
+                        {
+                              type: "linear",
+                              icon: "☕",
+                              stage: "USED",
+                              title: "12 Minutes",
+                              desc: "The average coffee cup is held for <strong>12 minutes.</strong> It took 100 years of tree growth and a global supply chain to get here.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "🗑️",
+                              stage: "BINNED",
+                              title: "Landfill",
+                              desc: "<strong>500 billion disposable cups</strong> are used every year. Less than 1% are recycled. The rest go to landfill or into waterways.",
+                        },
+                        {
+                              type: "crisis",
+                              icon: "💧",
+                              stage: "OCEAN",
+                              title: "Microplastics",
+                              desc: "The plastic lining breaks down into <strong>microplastics</strong> that enter the water supply, the food chain, and eventually — your body.",
+                        },
+                  ],
+                  circular: [
+                        {
+                              type: "circular",
+                              icon: "♻️",
+                              stage: "REUSABLE CUP",
+                              title: "One Cup. Years of Coffee.",
+                              desc: "A reusable cup offsets its own carbon cost after <strong>just 15 uses.</strong> After that, you're ahead. Every. Single. Time.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "💰",
+                              stage: "DISCOUNT",
+                              title: "Café Incentives",
+                              desc: "Many cafés offer discounts for reusable cups. <strong>You spend less. The planet gets less plastic.</strong> Everyone wins except the cup manufacturer.",
+                        },
+                        {
+                              type: "circular",
+                              icon: "🌊",
+                              stage: "CLEANER WATER",
+                              title: "No Microplastics",
+                              desc: "What doesn't exist can't pollute. <strong>Preventing waste is always more effective than managing it.</strong> The cup that was never thrown away.",
+                        },
+                  ],
+            },
+      };
+
+      let currentProd = "shirt";
+      function renderLifecycle(prod) {
+            const data = products[prod];
+            const track = document.getElementById("lifecycle-track");
+            track.innerHTML = "";
+            // Linear stages
+            data.linear.forEach((s, i) => {
+                  const row = document.createElement("div");
+                  row.className = `stage-row ${s.type}`;
+                  row.style.setProperty("--sd", i * 0.07 + "s");
+                  row.innerHTML = `<div class="stage-icon">${s.icon}</div><div class="stage-content"><div class="stage-label">${s.stage}</div><div class="stage-title">${s.title}</div><div class="stage-desc">${s.desc}</div>${s.type === "crisis" ? `<div class="stage-tag">⚠ CRISIS POINT</div>` : ""}</div>`;
+                  track.appendChild(row);
+                  setTimeout(() => {
+                        const so = new IntersectionObserver(
+                              (es) => {
+                                    es.forEach((e) => {
+                                          if (e.isIntersecting) {
+                                                setTimeout(() => e.target.classList.add("vis"), i * 70);
+                                                so.unobserve(e.target);
+                                          }
+                                    });
+                              },
+                              { threshold: 0.15 },
+                        );
+                        so.observe(row);
+                  }, 50);
+            });
+            // Divider
+            const div = document.createElement("div");
+            div.className = "circular-divider";
+            div.innerHTML = '<div class="circ-line"></div><div class="circ-label">✦ BUT WHAT IF — THE CIRCULAR PATH</div><div class="circ-line right"></div>';
+            track.appendChild(div);
+            // Circular stages
+            data.circular.forEach((s, i) => {
+                  const row = document.createElement("div");
+                  row.className = `stage-row ${s.type}`;
+                  row.style.setProperty("--sd", (i + data.linear.length) * 0.07 + "s");
+                  row.innerHTML = `<div class="stage-icon">${s.icon}</div><div class="stage-content"><div class="stage-label">${s.stage}</div><div class="stage-title">${s.title}</div><div class="stage-desc">${s.desc}</div><div class="stage-tag">✦ CIRCULAR PATH</div></div>`;
+                  track.appendChild(row);
+                  setTimeout(() => {
+                        const so = new IntersectionObserver(
+                              (es) => {
+                                    es.forEach((e) => {
+                                          if (e.isIntersecting) {
+                                                setTimeout(() => e.target.classList.add("vis"), (i + 1) * 70);
+                                                so.unobserve(e.target);
+                                          }
+                                    });
+                              },
+                              { threshold: 0.15 },
+                        );
+                        so.observe(row);
+                  }, 50);
+            });
+      }
+      document.querySelectorAll(".prod-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                  document.querySelectorAll(".prod-btn").forEach((b) => b.classList.remove("active"));
+                  btn.classList.add("active");
+                  currentProd = btn.dataset.prod;
+                  renderLifecycle(currentProd);
+            });
+      });
+      // Init when visible
+      const lob = new IntersectionObserver(
+            (entries) => {
+                  entries.forEach((e) => {
+                        if (e.isIntersecting) {
+                              renderLifecycle("shirt");
+                              lob.unobserve(e.target);
+                        }
+                  });
+            },
+            { threshold: 0.2 },
+      );
+      lob.observe(document.getElementById("lifecycle"));
+</script>

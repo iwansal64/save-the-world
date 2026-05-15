@@ -1,0 +1,441 @@
+---
+
+---
+
+<style>
+      /* ═══════════════════════════════════════════════════════
+   SECTION 6 — THE SHIFT
+═══════════════════════════════════════════════════════ */
+      #shift {
+            position: relative;
+            background: var(--cream);
+            overflow: hidden;
+            padding: 140px 0 160px;
+      }
+      #shift::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                  radial-gradient(ellipse 60% 50% at 70% 30%, rgba(210, 185, 140, 0.4) 0%, transparent 65%), radial-gradient(ellipse 40% 40% at 20% 70%, rgba(180, 155, 105, 0.2) 0%, transparent 60%);
+            pointer-events: none;
+      }
+
+      /* Torn edge top */
+      .shift-tear-top {
+            position: relative;
+            height: 80px;
+            background: var(--black);
+            overflow: visible;
+            z-index: 30;
+      }
+      .shift-tear-top svg {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+      }
+
+      .shift-bg-collage {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+      }
+      .shift-deco {
+            position: absolute;
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--warm-brown);
+            opacity: 0.05;
+            letter-spacing: 8px;
+            white-space: nowrap;
+      }
+      .sd1 {
+            top: 5%;
+            left: -2%;
+            font-size: 100px;
+            transform: rotate(-3deg);
+      }
+      .sd2 {
+            top: 38%;
+            right: -4%;
+            font-size: 80px;
+            transform: rotate(5deg);
+      }
+      .sd3 {
+            bottom: 10%;
+            left: 3%;
+            font-size: 90px;
+            transform: rotate(-2deg);
+      }
+      .sd4 {
+            bottom: 35%;
+            right: 2%;
+            font-size: 70px;
+            transform: rotate(4deg);
+      }
+
+      .shift-header {
+            text-align: center;
+            padding: 0 24px 80px;
+            position: relative;
+            z-index: 10;
+      }
+      .shift-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 6px;
+            color: var(--green);
+            margin-bottom: 20px;
+      }
+      .shift-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(48px, 8vw, 100px);
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 0.95;
+      }
+      .shift-title em {
+            font-style: italic;
+            color: var(--green);
+      }
+      .shift-sub {
+            margin-top: 20px;
+            font-family: "Lora", serif;
+            font-size: 16px;
+            color: var(--muted-warm);
+            max-width: 520px;
+            margin: 20px auto 0;
+            line-height: 1.8;
+            font-style: italic;
+      }
+
+      /* Three principles — editorial magazine style */
+      .principles-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            gap: 2px;
+            position: relative;
+            z-index: 10;
+      }
+      .principle {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 48px;
+            align-items: start;
+            padding: 64px 48px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(92, 61, 30, 0.08);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--pd, 0s);
+            backdrop-filter: blur(8px);
+      }
+      .principle.vis {
+            opacity: 1;
+            transform: translateY(0);
+      }
+      .principle:nth-child(1) {
+            --pd: 0s;
+      }
+      .principle:nth-child(2) {
+            --pd: 0.1s;
+      }
+      .principle:nth-child(3) {
+            --pd: 0.2s;
+      }
+      .principle:hover {
+            background: rgba(255, 255, 255, 0.7);
+      }
+      .principle-word {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 80px;
+            color: var(--green);
+            letter-spacing: 4px;
+            line-height: 1;
+            opacity: 0.8;
+            transition:
+                  opacity 0.3s,
+                  transform 0.3s;
+            transform: translateX(0);
+      }
+      .principle:hover .principle-word {
+            opacity: 1;
+            transform: translateX(-4px);
+      }
+      .principle-content {
+      }
+      .principle-title {
+            font-family: "Playfair Display", serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+      }
+      .principle-body {
+            font-family: "Lora", serif;
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--muted-warm);
+      }
+      .principle-body strong {
+            color: var(--text-dark);
+      }
+      .principle-body em {
+            color: var(--green);
+            font-style: italic;
+      }
+      .principle-stat {
+            margin-top: 24px;
+            padding: 14px 18px;
+            border: 1px solid rgba(45, 138, 78, 0.15);
+            background: rgba(45, 138, 78, 0.04);
+            display: inline-block;
+      }
+      .principle-stat-text {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--green);
+      }
+
+      /* Stamp ink overlays */
+      .ink-stamp {
+            display: inline-block;
+            font-family: "Bebas Neue", sans-serif;
+            letter-spacing: 5px;
+            border: 2px solid;
+            padding: 5px 14px;
+            font-size: 10px;
+            transform: rotate(var(--r, 0deg));
+            opacity: 0.15;
+      }
+      .ink-stamp-green {
+            color: var(--green);
+            border-color: var(--green);
+      }
+      .ink-stamp-brown {
+            color: var(--warm-brown);
+            border-color: var(--warm-brown);
+      }
+
+      /* Cities success carousel */
+      .cities-section {
+            margin-top: 100px;
+            position: relative;
+            z-index: 10;
+      }
+      .cities-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 5px;
+            color: var(--muted-warm);
+            text-align: center;
+            margin-bottom: 40px;
+      }
+      .cities-track-wrap {
+            overflow: hidden;
+            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+      }
+      .cities-track {
+            display: flex;
+            gap: 2px;
+            animation: cityScroll 28s linear infinite;
+            width: max-content;
+      }
+      .cities-track:hover {
+            animation-play-state: paused;
+      }
+      .city-card {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(92, 61, 30, 0.1);
+            padding: 36px 28px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+            backdrop-filter: blur(4px);
+      }
+      .city-card:hover {
+            background: rgba(255, 255, 255, 0.75);
+      }
+      .city-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green), transparent);
+      }
+      .city-nm {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 32px;
+            letter-spacing: 3px;
+            color: var(--text-dark);
+            line-height: 1;
+            margin-bottom: 4px;
+      }
+      .city-cn {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: var(--muted-warm);
+            margin-bottom: 16px;
+      }
+      .city-win {
+            font-family: "Lora", serif;
+            font-size: 12px;
+            color: var(--muted-warm);
+            line-height: 1.65;
+            margin-bottom: 14px;
+      }
+      .city-stat {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            color: var(--green);
+      }
+</style>
+
+<!-- ════════════════════════════════
+     S6 — THE SHIFT
+════════════════════════════════ -->
+<div class="shift-tear-top">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"
+            ><path
+                  d="M0,0 L0,30 Q80,65 160,38 Q240,12 320,48 Q400,80 480,52 Q560,24 640,50 Q720,76 800,50 Q880,24 960,52 Q1040,78 1120,50 Q1200,22 1280,48 Q1360,72 1440,40 L1440,80 L0,80 Z"
+                  fill="#F5ECD7"></path></svg
+      >
+</div>
+<section id="shift" class="grain-warm">
+      <div class="shift-bg-collage">
+            <div class="shift-deco sd1">REPAIR</div><div class="shift-deco sd2">REUSE</div>
+            <div class="shift-deco sd3">RETHINK</div><div class="shift-deco sd4">REDUCE</div>
+      </div>
+      <div class="shift-header">
+            <div class="shift-eyebrow reveal">// THE SHIFT</div>
+            <h2 class="shift-title reveal">WHAT <em>ENOUGH</em><br />LOOKS LIKE</h2>
+            <p class="shift-sub reveal">The circular economy isn't an ideology. It's already working. Here's the evidence.</p>
+      </div>
+      <div class="principles-wrap">
+            <div class="principle">
+                  <div>
+                        <div class="principle-word">REDUCE</div><div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                              <span class="ink-stamp ink-stamp-green" style="--r:-3deg">LESS IS MORE</span>
+                        </div>
+                  </div>
+                  <div class="principle-content">
+                        <div class="principle-title">Buy Less. Choose Well. Make It Last.</div>
+                        <div class="principle-body">
+                              The most sustainable product is <strong>the one never made.</strong> Before every purchase, one question: do I need this, or do I need to feel something?<br /><br />The
+                              fashion industry produces <em>twice as many clothes</em> as it did 20 years ago — and 60% go unworn. The problem isn't supply. It's manufactured desire.
+                        </div>
+                        <div class="principle-stat"><div class="principle-stat-text">↓ 30% of clothing purchases are never worn even once</div></div>
+                  </div>
+            </div>
+            <div class="principle">
+                  <div>
+                        <div class="principle-word">REPAIR</div><div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                              <span class="ink-stamp ink-stamp-brown" style="--r:2deg">MAKE IT LAST</span>
+                        </div>
+                  </div>
+                  <div class="principle-content">
+                        <div class="principle-title">A Torn Seam Isn't the End. It's a Story.</div>
+                        <div class="principle-body">
+                              Patagonia's Worn Wear program has repaired <strong>over 100,000 garments</strong> since 2013. Fairphone builds phones designed to be taken apart, upgraded, and repaired by
+                              anyone.<br /><br />The repair economy creates <em>5x more jobs</em> than manufacturing — and keeps things out of landfill. A repaired object has more character than a new one.
+                              It has history.
+                        </div>
+                        <div class="principle-stat"><div class="principle-stat-text">↑ Repair economy creates 5× more jobs than manufacturing</div></div>
+                  </div>
+            </div>
+            <div class="principle">
+                  <div>
+                        <div class="principle-word">RETHINK</div><div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                              <span class="ink-stamp ink-stamp-green" style="--r:-4deg">OWN LESS</span>
+                        </div>
+                  </div>
+                  <div class="principle-content">
+                        <div class="principle-title">Ownership vs. Access. Stuff vs. Experience.</div>
+                        <div class="principle-body">
+                              Libraries of things. Clothing swaps. Tool-sharing cooperatives. Rental markets. The sharing economy isn't a compromise — it's an upgrade.<br /><br />Studies consistently
+                              show the <em>happiest consumers own the least.</em> Beyond a certain threshold, more stuff correlates with more anxiety, not more satisfaction. We were sold the wrong metric.
+                        </div>
+                        <div class="principle-stat"><div class="principle-stat-text">↓ Research shows wellbeing peaks below average consumer ownership levels</div></div>
+                  </div>
+            </div>
+      </div>
+
+      <!-- Cities carousel -->
+      <div class="cities-section">
+            <div class="cities-eyebrow reveal">// BRANDS &amp; CITIES ALREADY LEADING</div>
+            <div class="cities-track-wrap">
+                  <div class="cities-track">
+                        <div class="city-card">
+                              <div class="city-nm">PATAGONIA</div><div class="city-cn">🇺🇸 USA — APPAREL</div><div class="city-win">
+                                    Pledges 1% of revenue to environmental causes. Their "Don't Buy This Jacket" ad campaign actively discouraged overconsumption of their own products.
+                              </div><div class="city-stat">♻️ 100,000+ garments repaired via Worn Wear</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">FAIRPHONE</div><div class="city-cn">🇳🇱 NETHERLANDS — TECH</div><div class="city-win">
+                                    The only smartphone designed to be taken apart, repaired and upgraded by anyone. Every component is replaceable. Your phone shouldn't die when one part breaks.
+                              </div><div class="city-stat">🔧 Average lifespan: 7 years vs 2.5 industry avg</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">AMSTERDAM</div><div class="city-cn">🇳🇱 NETHERLANDS — CITY</div><div class="city-win">
+                                    The world's first city to officially adopt the Doughnut Economy model. Circular economy targets embedded in all planning decisions since 2020.
+                              </div><div class="city-stat">♻️ Zero waste to landfill target by 2030</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">TOO GOOD TO GO</div><div class="city-cn">🇩🇰 DENMARK — FOOD</div><div class="city-win">
+                                    App connecting restaurants with surplus food to consumers at reduced prices. Saves millions of meals from landfill every week across 17 countries.
+                              </div><div class="city-stat">🍱 350M+ meals saved from waste since 2016</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">STOCKHOLM</div><div class="city-cn">🇸🇪 SWEDEN — CITY</div><div class="city-win">
+                                    Home to the world's first shopping mall exclusively for repaired and upcycled goods. ReTuna Återbruksgalleria opened in 2015 — 14 shops, all second-hand.
+                              </div><div class="city-stat">🛍️ First upcycling mall in the world, 2015</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">EILEEN FISHER</div><div class="city-cn">🇺🇸 USA — FASHION</div><div class="city-win">
+                                    Takes back any garment, any condition, and resells, redesigns or recycles it. Renew programme has taken back over 1.5 million garments since 2009.
+                              </div><div class="city-stat">🔄 1.5M+ garments reclaimed since 2009</div>
+                        </div>
+                        <!-- Duplicates -->
+                        <div class="city-card">
+                              <div class="city-nm">PATAGONIA</div><div class="city-cn">🇺🇸 USA — APPAREL</div><div class="city-win">
+                                    Pledges 1% of revenue to environmental causes. Their "Don't Buy This Jacket" campaign actively discouraged overconsumption of their own products.
+                              </div><div class="city-stat">♻️ 100,000+ garments repaired via Worn Wear</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">FAIRPHONE</div><div class="city-cn">🇳🇱 NETHERLANDS — TECH</div><div class="city-win">
+                                    The only smartphone designed to be taken apart, repaired and upgraded by anyone. Every component replaceable. Your phone shouldn't die when one part breaks.
+                              </div><div class="city-stat">🔧 Average lifespan: 7 years vs 2.5 industry avg</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">AMSTERDAM</div><div class="city-cn">🇳🇱 NETHERLANDS — CITY</div><div class="city-win">
+                                    The world's first city to officially adopt the Doughnut Economy model, with circular targets in all planning decisions.
+                              </div><div class="city-stat">♻️ Zero waste to landfill target by 2030</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">TOO GOOD TO GO</div><div class="city-cn">🇩🇰 DENMARK — FOOD</div><div class="city-win">
+                                    App connecting restaurants with surplus food to consumers. Saves millions of meals from landfill weekly across 17 countries.
+                              </div><div class="city-stat">🍱 350M+ meals saved from waste since 2016</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">STOCKHOLM</div><div class="city-cn">🇸🇪 SWEDEN — CITY</div><div class="city-win">
+                                    Home to the world's first shopping mall exclusively for repaired and upcycled goods. ReTuna — 14 shops, all second-hand.
+                              </div><div class="city-stat">🛍️ First upcycling mall in the world, 2015</div>
+                        </div>
+                        <div class="city-card">
+                              <div class="city-nm">EILEEN FISHER</div><div class="city-cn">🇺🇸 USA — FASHION</div><div class="city-win">
+                                    Takes back any garment in any condition and resells, redesigns or recycles it.
+                              </div><div class="city-stat">🔄 1.5M+ garments reclaimed since 2009</div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>

@@ -1,0 +1,343 @@
+---
+
+---
+
+<style>
+      /* ═══════════════════════════════════════════════════════
+      SECTION 3 — THE NUMBERS
+      ═══════════════════════════════════════════════════════ */
+      #numbers {
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+            padding: 120px 0 160px;
+            border-top: 1px solid #111;
+      }
+      #numbers::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+            box-shadow: 0 0 20px var(--amber);
+      }
+
+      /* Spotlight scan effect */
+      .spotlight {
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(ellipse 40% 30% at 50% 0%, rgba(255, 140, 0, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+            animation: spotScan 12s ease-in-out infinite;
+      }
+      @keyframes spotScan {
+            0%,
+            100% {
+                  transform: translateX(-20%);
+            }
+            50% {
+                  transform: translateX(20%);
+            }
+      }
+
+      .numbers-header {
+            text-align: center;
+            padding: 0 24px 80px;
+            position: relative;
+            z-index: 10;
+      }
+      .numbers-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 6px;
+            color: var(--amber);
+            margin-bottom: 20px;
+      }
+      .numbers-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(52px, 9vw, 120px);
+            letter-spacing: 4px;
+            color: var(--text-light);
+            line-height: 0.9;
+      }
+      .numbers-title em {
+            color: var(--amber);
+            font-style: normal;
+      }
+      .numbers-sub {
+            margin-top: 20px;
+            font-family: "Lora", serif;
+            font-size: 15px;
+            color: rgba(240, 237, 232, 0.35);
+            font-style: italic;
+      }
+
+      /* Stat cards grid */
+      .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            max-width: 1140px;
+            margin: 0 auto 100px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+      }
+      .stat-card-dark {
+            background: #0c0c0c;
+            padding: 52px 40px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s);
+      }
+      .stat-card-dark.vis {
+            opacity: 1;
+            transform: translateY(0);
+      }
+      .stat-card-dark:hover {
+            background: #111;
+      }
+      /* scanline */
+      .stat-card-dark::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 140, 0, 0.008) 3px, rgba(255, 140, 0, 0.008) 4px);
+            pointer-events: none;
+      }
+      .stat-card-dark::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--amber);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 10px var(--amber);
+      }
+      .stat-card-dark:hover::after {
+            transform: scaleX(1);
+      }
+
+      .stat-num-big {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(52px, 5vw, 72px);
+            color: var(--amber);
+            line-height: 1;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
+      }
+      .stat-unit-label {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--muted-dark);
+            margin-top: 6px;
+      }
+      .stat-context {
+            font-family: "Lora", serif;
+            font-size: 13px;
+            color: rgba(240, 237, 232, 0.45);
+            margin-top: 18px;
+            line-height: 1.7;
+      }
+      .stat-context strong {
+            color: rgba(240, 237, 232, 0.8);
+      }
+
+      /* THE PILE visual */
+      .pile-section {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+            text-align: center;
+      }
+      .pile-label {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 5px;
+            color: var(--amber);
+            margin-bottom: 40px;
+            opacity: 0.6;
+      }
+      .pile-wrap {
+            position: relative;
+            height: 260px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            overflow: visible;
+      }
+      .pile-item {
+            flex-shrink: 0;
+            border-radius: 3px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                  opacity 0.5s,
+                  transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition-delay: var(--pd, 0s);
+            animation: floatWaste 4s ease-in-out infinite var(--pd, 0s);
+      }
+      .pile-item.vis {
+            opacity: 1;
+            transform: translateY(0);
+      }
+      .pile-bottom-text {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(20px, 3vw, 32px);
+            font-style: italic;
+            color: rgba(240, 237, 232, 0.5);
+            margin-top: 40px;
+            line-height: 1.5;
+      }
+      .pile-bottom-text em {
+            color: var(--amber);
+            font-style: normal;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(28px, 4vw, 48px);
+            letter-spacing: 2px;
+            vertical-align: middle;
+      }
+</style>
+
+<!-- ════════════════════════════════
+     S3 — THE NUMBERS
+════════════════════════════════ -->
+<section id="numbers" class="grain-dark">
+      <div class="spotlight"></div>
+      <div class="numbers-header">
+            <div class="numbers-eyebrow reveal">// THE PILE WE BUILT</div>
+            <h2 class="numbers-title reveal">THE NUMBERS<br /><em>DON'T LIE.</em></h2>
+            <p class="numbers-sub reveal">These aren't statistics. They're consequences.</p>
+      </div>
+      <div class="stat-grid">
+            <div class="stat-card-dark" style="--d:0s">
+                  <div class="stat-num-big" data-target="5000" data-prefix="$" data-suffix="">0</div><div class="stat-unit-label">PER PERSON / YEAR</div><div class="stat-context">
+                        Spent on <strong>impulse purchases alone.</strong> Not food. Not rent. Things bought on a feeling that faded before the package arrived.
+                  </div>
+            </div>
+            <div class="stat-card-dark" style="--d:0.08s">
+                  <div class="stat-num-big" data-target="1" data-prefix="" data-suffix=" TRUCK">0</div><div class="stat-unit-label">EVERY SECOND</div><div class="stat-context">
+                        A garbage truck of <strong>textiles is wasted</strong> globally every second. Fast fashion doesn't just move fast. It disappears fast.
+                  </div>
+            </div>
+            <div class="stat-card-dark" style="--d:0.16s">
+                  <div class="stat-num-big" data-target="33" data-prefix="" data-suffix="%">0</div><div class="stat-unit-label">OF ALL FOOD PRODUCED</div><div class="stat-context">
+                        <strong>1.3 billion tonnes of food</strong> wasted annually — while 820 million people go to bed hungry. Every night.
+                  </div>
+            </div>
+            <div class="stat-card-dark" style="--d:0.24s">
+                  <div class="stat-num-big" data-target="2700" data-prefix="" data-suffix="L">0</div><div class="stat-unit-label">OF WATER</div><div class="stat-context">
+                        To make <strong>one cotton t-shirt.</strong> That's 2.5 years of drinking water. You wore it seven times. Then forgot it existed.
+                  </div>
+            </div>
+            <div class="stat-card-dark" style="--d:0.32s">
+                  <div class="stat-num-big" data-target="73" data-prefix="" data-suffix="%">0</div><div class="stat-unit-label">OF CLOTHING</div><div class="stat-context">
+                        Ends up in <strong>landfill or incinerated.</strong> The "circular" economy hasn't arrived yet. Linear production is still the default — and we're paying for it.
+                  </div>
+            </div>
+            <div class="stat-card-dark" style="--d:0.4s">
+                  <div class="stat-num-big" data-target="10" data-prefix="" data-suffix="%">0</div><div class="stat-unit-label">OF GLOBAL CO₂ EMISSIONS</div><div class="stat-context">
+                        Come from <strong>fashion alone</strong> — more than international aviation and shipping combined. The most polluting thing in your wardrobe isn't the car outside.
+                  </div>
+            </div>
+      </div>
+
+      <!-- THE PILE -->
+      <div class="pile-section">
+            <div class="pile-label reveal">// THIS IS WHAT ONE YEAR LOOKS LIKE</div>
+            <div class="pile-wrap" id="pile-wrap">
+                  <!-- Pile items generated by JS -->
+            </div>
+            <p class="pile-bottom-text reveal">
+                  Every item below represents a real category of waste generated globally in a single year. The pile doesn't fit on this page. <em>THAT'S THE POINT.</em>
+            </p>
+      </div>
+</section>
+
+<script is:inline defer>
+      /* ═══════════════════════════════ STAT COUNTERS ═══════════════════════════════ */
+      function animCount(el) {
+            const target = parseFloat(el.dataset.target);
+            const prefix = el.dataset.prefix || "";
+            const suffix = el.dataset.suffix || "";
+            const dur = 2000;
+            const start = performance.now();
+            function tick(now) {
+                  const p = Math.min((now - start) / dur, 1);
+                  const e = 1 - Math.pow(1 - p, 3);
+                  const v = e * target;
+                  el.textContent = prefix + (target >= 1000 ? Math.round(v).toLocaleString() : target < 5 ? v.toFixed(0) : Math.round(v)) + suffix;
+                  if (p < 1) requestAnimationFrame(tick);
+                  else el.textContent = prefix + (target >= 1000 ? target.toLocaleString() : target) + suffix;
+            }
+            requestAnimationFrame(tick);
+      }
+      const cob = new IntersectionObserver(
+            (entries) => {
+                  entries.forEach((e) => {
+                        if (!e.isIntersecting) return;
+                        e.target.classList.add("vis");
+                        const numEl = e.target.querySelector("[data-target]");
+                        if (numEl && !numEl.dataset.counted) {
+                              animCount(numEl);
+                              numEl.dataset.counted = "1";
+                        }
+                        cob.unobserve(e.target);
+                  });
+            },
+            { threshold: 0.2 },
+      );
+      document.querySelectorAll(".stat-card-dark").forEach((el) => cob.observe(el));
+
+      /* ═══════════════════════════════ THE PILE ═══════════════════════════════ */
+      const pileItems = [
+            { w: 60, h: 40, bg: "#1a1208", label: "👕", title: "Clothing" },
+            { w: 30, h: 50, bg: "#1a1208", label: "📱", title: "Electronics" },
+            { w: 70, h: 25, bg: "#0f1a0f", label: "🍎", title: "Food" },
+            { w: 40, h: 60, bg: "#1a0f0f", label: "🧴", title: "Cosmetics" },
+            { w: 80, h: 30, bg: "#1a1208", label: "👗", title: "Fast Fashion" },
+            { w: 35, h: 45, bg: "#0f0f1a", label: "🎮", title: "Electronics" },
+            { w: 55, h: 35, bg: "#1a1208", label: "📦", title: "Packaging" },
+            { w: 45, h: 55, bg: "#1a0f08", label: "🥤", title: "Plastic" },
+            { w: 65, h: 20, bg: "#1a1208", label: "📚", title: "Paper" },
+            { w: 50, h: 65, bg: "#0f1a0f", label: "🌿", title: "Organics" },
+            { w: 75, h: 28, bg: "#1a1208", label: "👟", title: "Footwear" },
+            { w: 38, h: 48, bg: "#1a1208", label: "⌚", title: "Accessories" },
+      ];
+      const pile = document.getElementById("pile-wrap");
+      pileItems.forEach((item, i) => {
+            const div = document.createElement("div");
+            div.className = "pile-item";
+            div.style.cssText = `width:${item.w}px;height:${item.h}px;background:${item.bg};border:1px solid #2a2a2a;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:16px;align-self:flex-end;--pd:${i * 0.06}s;--r:${(Math.random() - 0.5) * 20}deg;align-self:flex-end;`;
+            div.innerHTML = `<span style="font-size:14px;opacity:0.6" title="${item.title}">${item.label}</span>`;
+            pile.appendChild(div);
+      });
+      const pileOb = new IntersectionObserver(
+            (entries) => {
+                  entries.forEach((e) => {
+                        if (!e.isIntersecting) return;
+                        document.querySelectorAll(".pile-item").forEach((el, i) => {
+                              setTimeout(() => el.classList.add("vis"), i * 50);
+                        });
+                        pileOb.unobserve(e.target);
+                  });
+            },
+            { threshold: 0.3 },
+      );
+      pileOb.observe(pile);
+</script>

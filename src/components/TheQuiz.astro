@@ -1,0 +1,468 @@
+---
+
+---
+
+<style is:global>
+      /* ═══════════════════════════════════════════════════════
+      SECTION 4 — THE QUIZ
+      ═══════════════════════════════════════════════════════ */
+      #quiz {
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+            padding: 120px 0 160px;
+            border-top: 1px solid #111;
+      }
+      #quiz::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(ellipse, rgba(255, 140, 0, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+      }
+
+      .quiz-header {
+            text-align: center;
+            padding: 0 24px 80px;
+            position: relative;
+            z-index: 10;
+      }
+      .quiz-badge {
+            display: inline-block;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 5px;
+            color: var(--amber);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            padding: 8px 20px;
+            margin-bottom: 28px;
+            background: rgba(255, 140, 0, 0.04);
+      }
+      .quiz-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(52px, 9vw, 110px);
+            letter-spacing: 4px;
+            color: var(--text-light);
+            line-height: 0.9;
+      }
+      .quiz-title span {
+            color: var(--amber);
+      }
+      .quiz-sub {
+            margin-top: 20px;
+            font-family: "Lora", serif;
+            font-size: 15px;
+            color: rgba(240, 237, 232, 0.35);
+            font-style: italic;
+            max-width: 500px;
+            margin: 20px auto 0;
+      }
+
+      /* Quiz progress bar */
+      .quiz-progress-wrap {
+            max-width: 700px;
+            margin: 0 auto 48px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+      }
+      .quiz-progress-track {
+            height: 2px;
+            background: #1a1a1a;
+            border-radius: 2px;
+      }
+      .quiz-progress-fill {
+            height: 100%;
+            background: var(--amber);
+            border-radius: 2px;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
+            width: 0%;
+      }
+      .quiz-q-counter {
+            display: flex;
+            justify-content: space-between;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--muted-dark);
+            margin-bottom: 12px;
+      }
+
+      /* Question */
+      .quiz-question-wrap {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+      }
+      .quiz-q-text {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(22px, 3vw, 38px);
+            font-style: italic;
+            color: var(--text-light);
+            line-height: 1.3;
+            margin-bottom: 48px;
+            min-height: 80px;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .quiz-q-text.show {
+            opacity: 1;
+            transform: translateY(0);
+      }
+
+      .quiz-options {
+            display: grid;
+            gap: 12px;
+      }
+      .quiz-opt {
+            background: transparent;
+            border: 1px solid #1e1e1e;
+            padding: 22px 28px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+      }
+      .quiz-opt::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 140, 0, 0.04);
+            opacity: 0;
+            transition: opacity 0.3s;
+      }
+      .quiz-opt:hover::before {
+            opacity: 1;
+      }
+      .quiz-opt:hover {
+            border-color: rgba(255, 140, 0, 0.4);
+            transform: translateX(6px);
+      }
+      .quiz-opt:active {
+            transform: scale(0.98);
+      }
+      .opt-letter {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 20px;
+            color: var(--amber);
+            letter-spacing: 2px;
+            flex-shrink: 0;
+            line-height: 1;
+            margin-top: 2px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+      }
+      .quiz-opt:hover .opt-letter {
+            opacity: 1;
+      }
+      .opt-text {
+            font-family: "Lora", serif;
+            font-size: 15px;
+            color: rgba(240, 237, 232, 0.6);
+            line-height: 1.6;
+            transition: color 0.3s;
+      }
+      .quiz-opt:hover .opt-text {
+            color: rgba(240, 237, 232, 0.9);
+      }
+
+      /* Result card */
+      #quiz-result {
+            display: none;
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 24px;
+            opacity: 0;
+            transition: opacity 0.8s;
+      }
+      #quiz-result.show {
+            opacity: 1;
+      }
+      .result-card {
+            background: #0c0c0c;
+            border: 1px solid #1e1e1e;
+            padding: 60px 52px;
+            position: relative;
+            overflow: hidden;
+      }
+      .result-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--amber), var(--ember));
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
+      }
+      .result-archetype-label {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 5px;
+            color: var(--amber);
+            margin-bottom: 16px;
+      }
+      .result-archetype-name {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(48px, 7vw, 80px);
+            color: var(--text-light);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-bottom: 28px;
+      }
+      .result-archetype-desc {
+            font-family: "Lora", serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(240, 237, 232, 0.6);
+            margin-bottom: 32px;
+      }
+      .result-archetype-desc em {
+            color: var(--amber);
+            font-style: normal;
+            font-weight: 600;
+      }
+      .result-change {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--green-light);
+            padding: 16px 20px;
+            border: 1px solid rgba(45, 138, 78, 0.2);
+            background: rgba(45, 138, 78, 0.05);
+            line-height: 1.6;
+      }
+      .result-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+      }
+      .result-btn {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            padding: 14px 28px;
+            transition: all 0.3s;
+      }
+      .result-btn-retry {
+            background: transparent;
+            border: 1px solid #2a2a2a;
+            color: rgba(240, 237, 232, 0.5);
+      }
+      .result-btn-retry:hover {
+            border-color: var(--amber);
+            color: var(--amber);
+      }
+      .result-btn-next {
+            background: var(--amber);
+            border: none;
+            color: #000;
+            font-weight: 700;
+      }
+      .result-btn-next:hover {
+            background: var(--ember);
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+      }
+</style>
+
+<!-- ════════════════════════════════
+     S4 — THE QUIZ
+════════════════════════════════ -->
+<section id="quiz" class="grain-dark">
+      <div class="quiz-header">
+            <div class="quiz-badge reveal">// INTERACTIVE</div>
+            <h2 class="quiz-title reveal">WHO ARE<br /><span>YOU, REALLY?</span></h2>
+            <p class="quiz-sub reveal">6 questions. No right answers. Just mirrors.</p>
+      </div>
+      <div class="quiz-progress-wrap reveal">
+            <div class="quiz-q-counter"><span id="quiz-counter">QUESTION 1 OF 6</span><span id="q-score-label">YOUR ARCHETYPE FORMS</span></div>
+            <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress"></div></div>
+      </div>
+      <div class="quiz-question-wrap">
+            <div class="quiz-q-text show" id="quiz-q-text">Your favourite jacket has a hole. You...</div>
+            <div class="quiz-options" id="quiz-options">
+                  <!-- filled by JS -->
+            </div>
+            <div id="quiz-result">
+                  <div class="result-card">
+                        <div class="result-archetype-label">YOUR CONSUMER ARCHETYPE</div>
+                        <div class="result-archetype-name" id="result-name">—</div>
+                        <div class="result-archetype-desc" id="result-desc">—</div>
+                        <div class="result-change" id="result-change">—</div>
+                        <div class="result-btns">
+                              <button class="result-btn result-btn-retry" id="btn-retry">↺ TRY AGAIN</button>
+                              <button class="result-btn result-btn-next" onclick="document.getElementById('lifecycle').scrollIntoView({behavior:'smooth'})">CONTINUE →</button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+
+<script is:inline>
+      const quizCounter = document.getElementById("quiz-counter");
+      const quizOptions = document.getElementById("quiz-options");
+
+      const questions = [
+            {
+                  question: "Your favourite jacket has a hole. You...",
+                  options: [
+                        "Sew it up — or find a tailor. It's fixable.",
+                        "Buy a replacement. It had a good run.",
+                        "Buy a replacement AND keep the old one, just in case.",
+                        "You own 11 jackets. This is fine.",
+                  ],
+                  scores: [0, 1, 2, 3],
+            },
+            {
+                  question: "A sale notification pops up. Your first feeling is...",
+                  options: [
+                        "Mild curiosity — I'll check if I actually need something.",
+                        "Excitement. I deserve a treat.",
+                        "Anxiety. What if I miss out?",
+                        "Already opened the app before finishing this question.",
+                  ],
+                  scores: [0, 1, 2, 3],
+            },
+            {
+                  question: "The last thing you threw away was...",
+                  options: ["Genuinely broken beyond any repair.", "Replaced by something newer.", "Honestly? It still worked fine.", "I don't really keep track of that."],
+                  scores: [0, 1, 2, 3],
+            },
+            {
+                  question: "How many clothes do you own with tags still on?",
+                  options: [
+                        "Zero. I only buy what I'll use.",
+                        "One or two — good intentions, wrong size.",
+                        "Three to five. A sale situation.",
+                        "More than five. This question is making me uncomfortable.",
+                  ],
+                  scores: [0, 1, 2, 3],
+            },
+            {
+                  question: "When you feel stressed or sad, you...",
+                  options: ["Call a friend. Exercise. Sleep.", "Treat myself — I earned it.", "Browse online stores. Just browse.", "Wake up to packages I don't remember ordering."],
+                  scores: [0, 1, 2, 3],
+            },
+            {
+                  question: "Right now, you could name exactly how many clothes you own.",
+                  options: [
+                        "Yes, roughly. I'm intentional about it.",
+                        "Somewhere between 40-80? Maybe.",
+                        "No idea. Probably more than I think.",
+                        "This question is making me uncomfortable and I'd like to leave.",
+                  ],
+                  scores: [0, 1, 2, 3],
+            },
+      ];
+      const archetypes = [
+            {
+                  name: "THE CONSCIOUS CONSUMER",
+                  desc: "You're rare. You think before you buy. You understand that every purchase is a vote. <em>The world needs more of you.</em>",
+                  change: "KEEP GOING: Share this site with someone who needs it. Awareness is contagious.",
+            },
+            {
+                  name: "THE COMFORT BUYER",
+                  desc: "Shopping is self-care for you. That dopamine loop has you — but gently. You're aware enough to be here. <em>That awareness is the first step.</em>",
+                  change: "TRY THIS: Next time you want to shop, try a 48-hour rule first. See if the urge passes.",
+            },
+            {
+                  name: "THE FOMO SHOPPER",
+                  desc: "Manufactured scarcity owns you. You buy to avoid missing out, not because you need it. <em>The 'just in case' pile is very real.</em>",
+                  change: "TRY THIS: Unsubscribe from every retail email list. Today. It takes 5 minutes and changes everything.",
+            },
+            {
+                  name: "THE UNCONSCIOUS ACCUMULATOR",
+                  desc: "You've lost track — and that's by design. The system was built to make you lose track. <em>You're not broken. But something needs to change.</em>",
+                  change: "TRY THIS: Spend 30 minutes counting what you own. Not to judge — just to know. Knowledge is power.",
+            },
+      ];
+
+      let questionIndex = 0;
+      let totalScore = 0;
+
+      // Function that can be used to render new question
+      function renderQuestion() {
+            const questionData = questions[questionIndex];
+            const quizTextElement = document.getElementById("quiz-q-text");
+            quizTextElement.classList.remove("show");
+            setTimeout(() => {
+                  quizTextElement.textContent = questionData.question;
+                  quizTextElement.classList.add("show");
+                  quizCounter.textContent = `QUESTION ${questionIndex + 1} OF ${questions.length}`;
+                  document.getElementById("quiz-progress").style.width = (questionIndex / questions.length) * 100 + "%";
+                  quizOptions.innerHTML = "";
+                  questionData.options.forEach((text, i) => {
+                        const btn = document.createElement("button");
+                        btn.className = "quiz-opt";
+                        btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + i)}</span><span class="opt-text">${text}</span>`;
+                        btn.addEventListener("click", () => {
+                              totalScore += questionData.scores[i];
+                              questionIndex++;
+                              if (questionIndex < questions.length) {
+                                    renderQuestion();
+                              } else {
+                                    showResult();
+                              }
+                        });
+                        attachHover(".quiz-opt");
+                        quizOptions.appendChild(btn);
+                  });
+            }, 300);
+      }
+
+      // Function that used to show result
+      function showResult() {
+            quizOptions.style.display = "none";
+            document.getElementById("quiz-q-text").style.display = "none";
+            document.getElementById("quiz-progress").style.width = "100%";
+            document.getElementById("quiz-counter").textContent = "RESULTS";
+            const avg = totalScore / questions.length;
+            const idx = Math.min(Math.floor(avg), 3);
+            const a = archetypes[idx];
+            const res = document.getElementById("quiz-result");
+            document.getElementById("result-name").textContent = a.name;
+            document.getElementById("result-desc").innerHTML = a.desc;
+            document.getElementById("result-change").textContent = a.change;
+            res.style.display = "block";
+            setTimeout(() => res.classList.add("show"), 50);
+            document.getElementById("btn-retry").addEventListener("click", () => {
+                  questionIndex = 0;
+                  totalScore = 0;
+                  res.classList.remove("show");
+                  setTimeout(() => {
+                        res.style.display = "none";
+                        quizOptions.style.display = "";
+                        document.getElementById("quiz-q-text").style.display = "";
+                        renderQuestion();
+                  }, 500);
+            });
+      }
+
+      // Init quiz when in view
+      const qob = new IntersectionObserver(
+            (entries) => {
+                  entries.forEach((e) => {
+                        if (e.isIntersecting && questionIndex === 0) {
+                              renderQuestion();
+                              qob.unobserve(e.target);
+                        }
+                  });
+            },
+            { threshold: 0.3 },
+      );
+      qob.observe(document.getElementById("quiz"));
+</script>
