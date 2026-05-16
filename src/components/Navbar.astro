@@ -22,13 +22,6 @@
             transform: translateY(-50px);
       }
 
-      body:not(.dark-mode) nav * {
-            opacity: 0;
-            transition:
-                  opacity 0.3s 1.5s,
-                  transform 1s 1.5s;
-      }
-
       body.dark-mode nav {
             transition:
                   opacity 0.3s 1.5s,
@@ -55,5 +48,14 @@
             nav {
                   padding: 20px 24px;
             }
+      }
+</style>
+
+<style is:global>
+      #hero:not(.dark-mode) nav * {
+            opacity: 0;
+            transition:
+                  opacity 0.3s 1.5s,
+                  transform 1s 1.5s;
       }
 </style>
