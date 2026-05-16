@@ -1,3 +1,7 @@
+---
+import GapperTop from "./GapperTop.astro";
+---
+
 <style>
       /* ═══════════════════════════════════════════════════════
    SECTION 7 — THE PLEDGE
@@ -18,21 +22,6 @@
             height: 700px;
             background: radial-gradient(ellipse, rgba(45, 138, 78, 0.05) 0%, transparent 70%);
             pointer-events: none;
-      }
-
-      /* Tear top */
-      .pledge-tear {
-            position: relative;
-            height: 80px;
-            background: var(--cream);
-            overflow: visible;
-            z-index: 30;
-      }
-      .pledge-tear svg {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
       }
 
       .pledge-inner {
@@ -263,13 +252,6 @@
 <!-- ════════════════════════════════
      S7 — THE PLEDGE
 ════════════════════════════════ -->
-<div class="pledge-tear">
-      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"
-            ><path
-                  d="M0,0 L0,32 Q70,68 140,40 Q210,12 280,46 Q350,78 420,50 Q490,22 560,52 Q630,80 700,52 Q770,24 840,50 Q910,76 980,50 Q1050,24 1120,50 Q1190,74 1260,44 Q1330,16 1440,38 L1440,80 L0,80 Z"
-                  fill="#080808"></path></svg
-      >
-</div>
 <section id="pledge" class="grain-dark">
       <div class="pledge-inner">
             <div class="pledge-eyebrow reveal">// YOUR MOVE</div>

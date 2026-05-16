@@ -1,5 +1,6 @@
 ---
-
+import GapperBottom from "./GapperBottom.astro";
+import GapperTop from "./GapperTop.astro";
 ---
 
 <style>
@@ -19,21 +20,6 @@
             background:
                   radial-gradient(ellipse 60% 50% at 70% 30%, rgba(210, 185, 140, 0.4) 0%, transparent 65%), radial-gradient(ellipse 40% 40% at 20% 70%, rgba(180, 155, 105, 0.2) 0%, transparent 60%);
             pointer-events: none;
-      }
-
-      /* Torn edge top */
-      .shift-tear-top {
-            position: relative;
-            height: 80px;
-            background: var(--black);
-            overflow: visible;
-            z-index: 30;
-      }
-      .shift-tear-top svg {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
       }
 
       .shift-bg-collage {
@@ -303,13 +289,7 @@
 <!-- ════════════════════════════════
      S6 — THE SHIFT
 ════════════════════════════════ -->
-<div class="shift-tear-top">
-      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"
-            ><path
-                  d="M0,0 L0,30 Q80,65 160,38 Q240,12 320,48 Q400,80 480,52 Q560,24 640,50 Q720,76 800,50 Q880,24 960,52 Q1040,78 1120,50 Q1200,22 1280,48 Q1360,72 1440,40 L1440,80 L0,80 Z"
-                  fill="#F5ECD7"></path></svg
-      >
-</div>
+<GapperTop />
 <section id="shift" class="grain-warm">
       <div class="shift-bg-collage">
             <div class="shift-deco sd1">REPAIR</div><div class="shift-deco sd2">REUSE</div>
@@ -439,3 +419,4 @@
             </div>
       </div>
 </section>
+<GapperBottom />
