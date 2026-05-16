@@ -46,6 +46,17 @@ import TheFact from "../components/TheFact.astro";
             <Footer />
 
             <script>
+                  // ─── SCROLL ────────────────────────────────────────────────────────────────
+                  window.onscroll = function () {
+                        window.scrollTo(0, 0);
+                  };
+
+                  document.body.style.overflowY = "hidden";
+                  setTimeout(() => {
+                        document.body.style.overflowY = "auto";
+                        window.onscroll = null;
+                  }, 3000);
+
                   // ─── CURSOR ────────────────────────────────────────────────────────────────
                   const cur = document.getElementById("cur");
                   const curRing = document.getElementById("cur-ring");
@@ -89,8 +100,8 @@ import TheFact from "../components/TheFact.astro";
                   });
 
                   /* ═══════════════════════════════ DARK MODE BY SECTION ═══════════════════════════════ */
-                  const warmSections = ["shift"];
-                  const allSections = ["hero", "mirror", "numbers", "quiz", "lifecycle", "shift", "pledge"];
+                  const warmSections = ["fact", "shift"];
+                  const allSections = ["hero", "fact", "mirror", "numbers", "quiz", "lifecycle", "shift", "pledge"];
                   const sectionObserver = new IntersectionObserver(
                         (entries) => {
                               entries.forEach((e) => {
