@@ -7,6 +7,37 @@
       <div class="nav-sdg">SDG 12 — RESPONSIBLE CONSUMPTION</div>
 </nav>
 
+<style is:global>
+      nav:has(+ #hero.hero-dark) {
+            transition:
+                  opacity 0.3s 1.5s,
+                  transform 1s 1.5s;
+            opacity: 1;
+            transform: translateY(0);
+      }
+
+      nav:has(+ #hero:not(.hero-dark)) * {
+            opacity: 0;
+            transition:
+                  opacity 0.3s 1.5s,
+                  transform 1s 1.5s;
+      }
+
+      body.dark-mode nav .nav-logo {
+            color: var(--text-light);
+      }
+      body:not(.dark-mode) nav .nav-logo {
+            color: var(--text-dark);
+      }
+
+      body.dark-mode nav .nav-sdg {
+            color: var(--muted-warm);
+      }
+      body:not(.dark-mode) nav .nav-sdg {
+            color: var(--text-dark);
+      }
+</style>
+
 <style>
       nav {
             position: fixed;
@@ -20,14 +51,6 @@
             align-items: center;
             opacity: 0;
             transform: translateY(-50px);
-      }
-
-      body.dark-mode nav {
-            transition:
-                  opacity 0.3s 1.5s,
-                  transform 1s 1.5s;
-            opacity: 1;
-            transform: translateY(0);
       }
 
       .nav-logo {
@@ -48,14 +71,5 @@
             nav {
                   padding: 20px 24px;
             }
-      }
-</style>
-
-<style is:global>
-      #hero:not(.dark-mode) nav * {
-            opacity: 0;
-            transition:
-                  opacity 0.3s 1.5s,
-                  transform 1s 1.5s;
       }
 </style>
