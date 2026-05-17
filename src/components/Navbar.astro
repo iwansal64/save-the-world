@@ -3,12 +3,12 @@
 ---
 
 <nav>
-      <div class="nav-logo">CONSUMED</div>
+      <a class="nav-logo" href="#">CONSUMED</a>
       <div class="nav-sdg">SDG 12 — RESPONSIBLE CONSUMPTION</div>
 </nav>
 
 <style is:global>
-      nav:has(+ #hero.hero-dark) {
+      nav:has(~ #hero.hero-dark) {
             transition:
                   opacity 0.3s 1.5s,
                   transform 1s 1.5s;
@@ -16,7 +16,7 @@
             transform: translateY(0);
       }
 
-      nav:has(+ #hero:not(.hero-dark)) * {
+      nav:has(~ #hero:not(.hero-dark)) * {
             opacity: 0;
             transition:
                   opacity 0.3s 1.5s,
