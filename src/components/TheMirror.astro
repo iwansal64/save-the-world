@@ -52,6 +52,8 @@ const length = mirrorItems.length;
                   </div>
             </div>
 
+            <div class="relative left-1/2 -translate-x-1/2 mb-28 w-4/5 h-0.5 bg-linear-to-r from-(--amber)/10 via-(--amber)/50 to-(--amber)/10"></div>
+
             <h2 class="mirror-title" id="mirror-title">
                   WHY YOU<br /><span>CAN'T STOP.</span>
             </h2>
@@ -119,7 +121,7 @@ const length = mirrorItems.length;
                         <div class="pillar-stat-label">global retail market built almost entirely on selling you an identity, not a product</div>
                   </div>
             </div>
-      </div><!-- /pillars-wrap -->
+      </div>
 
       <!-- Recognition strip -->
       <div class="mirror-reflection" style="margin-top: 80px; padding: 0 0 0;">
@@ -444,6 +446,17 @@ const length = mirrorItems.length;
             line-height: 1.4;
             position: relative;
       }
+      .mirror-quote blockquote::after {
+            content: "\201D";
+            font-size: 120px;
+            color: var(--amber);
+            opacity: 0.12;
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            font-family: "Playfair Display", serif;
+            line-height: 1;
+      }
       .mirror-quote blockquote::before {
             content: "\201C";
             font-size: 120px;
@@ -634,7 +647,7 @@ const length = mirrorItems.length;
             transform-style: preserve-3d;
             transform-origin: center;
             margin-top: 400px;
-            margin-bottom: 400px;
+            margin-bottom: 250px;
             animation-name: mirror-animation;
             animation-timing-function: linear;
             animation-duration: 20s;
