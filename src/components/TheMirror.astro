@@ -1,4 +1,6 @@
 ---
+const mirrorItems = ["The Impulse Buyer", "The Trend Chaser", "The Guilt Purchaser", "The Retail Therapist", "The Hoarder", "The Minimalist Wannabe", "The FOMO Shopper"];
+const length = mirrorItems.length;
 
 ---
 
@@ -13,51 +15,40 @@
             <div class="mirror-label" id="ml-label">// THE MIRROR</div>
 
             <!-- Mirror SVG with rotating archetype -->
-            <div class="mirror-svg-wrap" id="mirror-svg-wrap">
-                  <svg width="280" height="360" viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                              <radialGradient id="mirrorGrad" cx="50%" cy="40%" r="55%">
-                                    <stop offset="0%" stop-color="#1a1208" stop-opacity="0.9"></stop>
-                                    <stop offset="100%" stop-color="#080808" stop-opacity="1"></stop>
-                              </radialGradient>
-                              <filter id="mirrorGlow">
-                                    <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
-                                    <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-                              </filter>
-                        </defs>
-                        <!-- Frame outer -->
-                        <rect x="4" y="4" width="272" height="352" rx="24" fill="none" stroke="#2a1f0f" stroke-width="8"></rect>
-                        <!-- Frame inner decoration -->
-                        <rect x="14" y="14" width="252" height="332" rx="18" fill="none" stroke="#1e1608" stroke-width="3"></rect>
-                        <!-- Mirror surface -->
-                        <rect x="22" y="22" width="236" height="316" rx="14" fill="url(#mirrorGrad)"></rect>
-                        <!-- Reflection shimmer -->
-                        <path d="M40 40 Q80 30 120 50 Q160 70 200 45 Q220 35 240 50" stroke="rgba(255,200,100,0.06)" stroke-width="1.5" fill="none"></path>
-                        <path d="M40 70 Q90 58 140 72 Q190 86 240 68" stroke="rgba(255,200,100,0.04)" stroke-width="1" fill="none"></path>
-                        <!-- Crack lines -->
-                        <path d="M140 22 L148 80 L132 110 L155 160" stroke="rgba(255,140,0,0.1)" stroke-width="0.8" fill="none"></path>
-                        <path d="M148 80 L168 95 L162 115" stroke="rgba(255,140,0,0.07)" stroke-width="0.5" fill="none"></path>
-                        <!-- Amber glow in mirror -->
-                        <ellipse cx="140" cy="180" rx="80" ry="90" fill="rgba(255,140,0,0.03)" filter="url(#mirrorGlow)"></ellipse>
-                        <!-- Frame ornament top -->
-                        <circle cx="140" cy="4" r="12" fill="#1e1608" stroke="#2a1f0f" stroke-width="2"></circle>
-                        <circle cx="140" cy="4" r="5" fill="#FF8C00" opacity="0.4"></circle>
-                        <!-- Frame ornament corners -->
-                        <circle cx="16" cy="16" r="8" fill="#1a1208"></circle>
-                        <circle cx="264" cy="16" r="8" fill="#1a1208"></circle>
-                        <circle cx="16" cy="344" r="8" fill="#1a1208"></circle>
-                        <circle cx="264" cy="344" r="8" fill="#1a1208"></circle>
-                  </svg>
+            <div id="mirror-wrapper">
+                  <div id="mirror-container">
+                        {mirrorItems.map((value, index) => {
+                              return <div class="mirror-svg-wrap" style={"overflow: hidden; position: absolute; transform-origin: center; transform: rotateY(" + ((index + 1) / length) * 360 + "deg) translateZ(400px) translateY(-50%); backface-visibility: hidden; animation-delay: " + (-index * 3 - 2.5) + "s;"} id="mirror-svg-wrap">
+                                    <div class="reflection w-3/5 aspect-4/5 rounded-full fixed top-1/2 -translate-1/2 bg-(--amber) opacity-20" style={"animation-delay: " + (-index * 3 - 1) + "s;"}></div>
+                                    <svg width="280" height="360" style="transform-box: fill-box;" viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <!-- Frame outer -->
+                                          <rect x="4" y="4" width="272" height="352" rx="24" fill="none" stroke="#2a1f0f" stroke-width="8"></rect>
+                                          <!-- Frame inner decoration -->
+                                          <rect x="14" y="14" width="252" height="332" rx="18" fill="none" stroke="#1e1608" stroke-width="3"></rect>
+                                          <!-- Mirror surface -->
+                                          <rect x="22" y="22" width="236" height="316" rx="14" fill="url(#mirrorGrad)"></rect>
+                                          <!-- Reflection shimmer -->
+                                          <path d="M40 40 Q80 30 120 50 Q160 70 200 45 Q220 35 240 50" stroke="rgba(255,200,100,0.06)" stroke-width="1.5" fill="none"></path>
+                                          <path d="M40 70 Q90 58 140 72 Q190 86 240 68" stroke="rgba(255,200,100,0.04)" stroke-width="1" fill="none"></path>
+                                          <!-- Crack lines -->
+                                          <path d="M140 22 L148 80 L132 110 L155 160" stroke="rgba(255,140,0,0.1)" stroke-width="0.8" fill="none"></path>
+                                          <path d="M148 80 L168 95 L162 115" stroke="rgba(255,140,0,0.07)" stroke-width="0.5" fill="none"></path>
+                                          <!-- Frame ornament top -->
+                                          <circle cx="140" cy="4" r="12" fill="#1e1608" stroke="#2a1f0f" stroke-width="2"></circle>
+                                          <circle cx="140" cy="4" r="5" fill="#FF8C00" opacity="0.4"></circle>
+                                          <!-- Frame ornament corners -->
+                                          <circle cx="16" cy="16" r="8" fill="#1a1208"></circle>
+                                          <circle cx="264" cy="16" r="8" fill="#1a1208"></circle>
+                                          <circle cx="16" cy="344" r="8" fill="#1a1208"></circle>
+                                          <circle cx="264" cy="344" r="8" fill="#1a1208"></circle>
+                                    </svg>
 
-                  <!-- Archetype text overlay -->
-                  <div class="mirror-archetype-wrap" id="archetype-wrap">
-                        <div class="archetype-text" id="at-0">The Impulse Buyer</div>
-                        <div class="archetype-text" id="at-1">The Trend Chaser</div>
-                        <div class="archetype-text" id="at-2">The Guilt Purchaser</div>
-                        <div class="archetype-text" id="at-3">The Retail Therapist</div>
-                        <div class="archetype-text" id="at-4">The Hoarder</div>
-                        <div class="archetype-text" id="at-5">The Minimalist Wannabe</div>
-                        <div class="archetype-text" id="at-6">The FOMO Shopper</div>
+                                    <!-- Archetype text overlay -->
+                                    <div class="mirror-archetype-wrap" id="archetype-wrap">
+                                          <div class="archetype-text">{value}</div>
+                                    </div>
+                              </div>;
+                        })}
                   </div>
             </div>
 
@@ -266,27 +257,6 @@
             letter-spacing: 6px;
             color: var(--amber);
             margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .mirror-label.vis {
-            opacity: 1;
-            transform: none;
-      }
-
-      /* SVG Mirror illustration */
-      .mirror-svg-wrap {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 48px;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-      }
-      .mirror-svg-wrap.vis {
-            opacity: 1;
-            transform: scale(1);
       }
 
       /* Rotating archetype text inside mirror */
@@ -303,21 +273,12 @@
             font-size: 16px;
             font-style: italic;
             color: var(--amber);
-            opacity: 0;
-            transform: translateY(8px);
-            transition:
-                  opacity 0.4s,
-                  transform 0.4s;
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             white-space: nowrap;
             text-align: center;
-      }
-      .archetype-text.active {
-            opacity: 1;
-            transform: translateY(0);
       }
 
       /* Mirror tagline */
@@ -327,13 +288,6 @@
             letter-spacing: 4px;
             color: var(--text-light);
             line-height: 0.9;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
-      }
-      .mirror-title.vis {
-            opacity: 1;
-            transform: none;
       }
       .mirror-title span {
             color: var(--amber);
@@ -347,13 +301,6 @@
             margin: 24px auto 0;
             line-height: 1.8;
             font-style: italic;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
-      }
-      .mirror-sub.vis {
-            opacity: 1;
-            transform: none;
       }
 
       /* ── PSYCHOLOGY PILLARS ── */
@@ -373,13 +320,6 @@
             background: #0e0e0e;
             padding: 56px 44px 48px;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(60px) rotate(var(--rot, 0deg));
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s);
-      }
-      .pillar-card.vis {
-            opacity: 1;
-            transform: translateY(0) rotate(var(--tilt, 0deg));
       }
       .pillar-card:nth-child(1) {
             --delay: 0s;
@@ -494,13 +434,6 @@
             padding: 100px 24px 80px;
             max-width: 860px;
             margin: 0 auto;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .mirror-quote.vis {
-            opacity: 1;
-            transform: none;
       }
       .mirror-quote blockquote {
             font-family: "Playfair Display", serif;
@@ -687,6 +620,79 @@
             transform: rotate(-3deg);
       }
 
+      #mirror-wrapper {
+            position: relative;
+            width: 100%;
+            height: max-content;
+      }
+
+      #mirror-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            left: 50%;
+            transform-style: preserve-3d;
+            transform-origin: center;
+            margin-top: 400px;
+            margin-bottom: 400px;
+            animation-name: mirror-animation;
+            animation-timing-function: linear;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+      }
+
+      #mirror-container > div {
+            animation-name: mirror-text-animation;
+            animation-duration: 20s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+      }
+
+      #mirror-container > div > .reflection {
+            animation-name: mirror-reflection-animation;
+            animation-duration: 20s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+      }
+
+      @keyframes mirror-animation {
+            0% {
+                  transform: translateX(-50%) perspective(1200px) rotateY(0);
+            }
+            100% {
+                  transform: translateX(-50%) perspective(1200px) rotateY(360deg);
+            }
+      }
+
+      @keyframes mirror-text-animation {
+            0% {
+                  filter: blur(0);
+            }
+            15% {
+                  filter: blur(4px);
+            }
+            85% {
+                  filter: blur(4px);
+            }
+            100% {
+                  filter: blur(0);
+            }
+      }
+      @keyframes mirror-reflection-animation {
+            0% {
+                  left: 150%;
+            }
+            15% {
+                  left: 150%;
+            }
+            85% {
+                  left: 150%;
+            }
+            100% {
+                  left: -50%;
+            }
+      }
+
       @media (max-width: 900px) {
             .pillars-wrap {
                   grid-template-columns: 1fr;
@@ -706,57 +712,3 @@
 </style>
 
 <script src="../scripts/mirror/mirror-pillarcards.ts"></script>
-<script>
-      // ─── INTERSECTION OBSERVER for section 2 ─────────────────────────────────
-      const items = [
-            { id: "ml-label", cls: "vis", delay: 0 },
-            { id: "mirror-svg-wrap", cls: "vis", delay: 100 },
-            { id: "mirror-title", cls: "vis", delay: 300 },
-            { id: "mirror-sub", cls: "vis", delay: 500 },
-            { id: "mirror-quote", cls: "vis", delay: 0 },
-            { id: "refl-label", cls: "vis", delay: 0 },
-            { id: "mirror-outro", cls: "vis", delay: 0 },
-      ];
-
-      const pillarIds = ["pc-0", "pc-1", "pc-2"];
-
-      const observer = new IntersectionObserver(
-            (entries) => {
-                  entries.forEach((e) => {
-                        if (!e.isIntersecting) return;
-                        const id = e.target.id;
-
-                        // Check items list
-                        const item = items.find((i) => i.id === id);
-                        if (item) {
-                              setTimeout(() => e.target.classList.add(item.cls), item.delay);
-                              observer.unobserve(e.target);
-                        }
-
-                        // Pillars
-                        if (pillarIds.includes(id)) {
-                              const delay = pillarIds.indexOf(id) * 130;
-                              setTimeout(() => e.target.classList.add("vis"), delay);
-                              observer.unobserve(e.target);
-                        }
-                  });
-            },
-            { threshold: 0.18 },
-      );
-
-      [...items.map((i) => i.id), ...pillarIds].forEach((id) => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-      });
-
-      // ─── ROTATING ARCHETYPES ─────────────────────────────────────────────────
-      const archetypes = document.querySelectorAll(".archetype-text");
-      let currentAt = 0;
-      archetypes[0].classList.add("active");
-
-      setInterval(() => {
-            archetypes[currentAt].classList.remove("active");
-            currentAt = (currentAt + 1) % archetypes.length;
-            archetypes[currentAt].classList.add("active");
-      }, 2000);
-</script>
