@@ -705,22 +705,8 @@
       }
 </style>
 
+<script src="../scripts/mirror/mirror-pillarcards.ts"></script>
 <script>
-      // ─── DARK MODE CURSOR on mirror section ──────────────────────────────────
-      const mirrorSection = document.getElementById("mirror");
-
-      const modeObserver = new IntersectionObserver(
-            (entries) => {
-                  entries.forEach((e) => {
-                        if (e.target === mirrorSection && e.isIntersecting) {
-                              document.body.classList.add("dark-mode");
-                        }
-                  });
-            },
-            { threshold: 0.3 },
-      );
-      modeObserver.observe(mirrorSection!);
-
       // ─── INTERSECTION OBSERVER for section 2 ─────────────────────────────────
       const items = [
             { id: "ml-label", cls: "vis", delay: 0 },
