@@ -608,7 +608,18 @@
 </section>
 
 <script>
-      // Cart Animation Mechanism
+      // ─── SCROLL ────────────────────────────────────────────────────────────────
+      window.onscroll = function () {
+            window.scrollTo(0, 0);
+      };
+
+      document.body.style.overflowY = "hidden";
+      setTimeout(() => {
+            document.body.style.overflowY = "auto";
+            window.onscroll = null;
+      }, 3000);
+
+      // ── Cart Animation Mechanism ─────────────────────────────────────────────────
       let count = 0;
       const badge = document.getElementById("badge");
 
@@ -698,8 +709,8 @@
                         // Cart animation starts
                         startsCounting();
                   }
-            }, /**90 */ 0);
-      }, /**2000 */ 0);
+            }, 90);
+      }, 2000);
 
       // Vignette grows as user scrolls hero
       window.addEventListener("scroll", () => {
