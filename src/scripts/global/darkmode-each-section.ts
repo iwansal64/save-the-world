@@ -20,7 +20,6 @@ const sectionObserver = new IntersectionObserver(
                         if (currentSectionIndex > previousSectionIndex) {
                               sidebarLinks[currentSectionIndex]!.classList.toggle("active", true);
                         }
-                        console.log(id);
                         previousSectionIndex = currentSectionIndex;
                   }
             });

@@ -20,15 +20,19 @@ document.addEventListener("mousemove", (e) => {
       requestAnimationFrame(animRing);
 })();
 
-document.querySelectorAll("button, a, .pillar-card, .recog-pill").forEach((el) => {
-      el.addEventListener("mouseenter", () => {
-            curRing!.style.width = "56px";
-            curRing!.style.height = "56px";
-            cur!.style.transform = "translate(-50%,-50%) scale(1.6)";
+
+export function attachHover(sel: string) {
+      document.querySelectorAll(sel).forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+                  curRing!.style.width = "56px";
+                  curRing!.style.height = "56px";
+                  cur!.style.transform = "translate(-50%,-50%) scale(1.6)";
+            });
+            el.addEventListener("mouseleave", () => {
+                  curRing!.style.width = "34px";
+                  curRing!.style.height = "34px";
+                  cur!.style.transform = "translate(-50%,-50%) scale(1)";
+            });
       });
-      el.addEventListener("mouseleave", () => {
-            curRing!.style.width = "34px";
-            curRing!.style.height = "34px";
-            cur!.style.transform = "translate(-50%,-50%) scale(1)";
-      });
-});
+}
+attachHover("button,a,.pillar-card,.recog-pill,.quiz-opt,.prod-btn,.pledge-opt,.city-card,.principle");
