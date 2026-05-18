@@ -114,14 +114,8 @@ import GapperTop from "./GapperTop.astro";
             padding: 64px 48px;
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(92, 61, 30, 0.08);
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--pd, 0s);
             backdrop-filter: blur(8px);
-      }
-      .principle.vis {
-            opacity: 1;
-            transform: translateY(0);
+            will-change: transform;
       }
       .principle:nth-child(1) {
             --pd: 0s;
@@ -133,7 +127,10 @@ import GapperTop from "./GapperTop.astro";
             --pd: 0.2s;
       }
       .principle:hover {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow:
+                  0 20px 60px rgba(92, 61, 30, 0.08),
+                  var(--shadow-green);
       }
       .principle-word {
             font-family: "Bebas Neue", sans-serif;
