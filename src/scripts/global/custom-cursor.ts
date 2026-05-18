@@ -1,10 +1,7 @@
 // ─── CURSOR ────────────────────────────────────────────────────────────────
 const cur = document.getElementById("cur");
-const curRing = document.getElementById("cur-ring");
 let mx = 0,
-      my = 0,
-      rx = window.innerWidth / 2,
-      ry = window.innerHeight / 2;
+      my = 0;
 
 document.addEventListener("mousemove", (e) => {
       mx = e.clientX;
@@ -12,27 +9,20 @@ document.addEventListener("mousemove", (e) => {
       cur!.style.left = `${mx}px`;
       cur!.style.top = `${my}px`;
 });
-(function animRing() {
-      rx += (mx - rx) * 0.1;
-      ry += (my - ry) * 0.1;
-      curRing!.style.left = `${rx}px`;
-      curRing!.style.top = `${ry}px`;
-      requestAnimationFrame(animRing);
-})();
 
 
 export function attachHover(sel: string) {
       document.querySelectorAll(sel).forEach((el) => {
             el.addEventListener("mouseenter", () => {
-                  curRing!.style.width = "56px";
-                  curRing!.style.height = "56px";
-                  cur!.style.transform = "translate(-50%,-50%) scale(1.6)";
+                  cur!.style.transform = "translate(-50%,-50%) scale(2.5)";
+                  cur!.style.color = "#ffffff";
+                  cur!.style.mixBlendMode = "difference";
             });
             el.addEventListener("mouseleave", () => {
-                  curRing!.style.width = "34px";
-                  curRing!.style.height = "34px";
                   cur!.style.transform = "translate(-50%,-50%) scale(1)";
+                  cur!.style.color = "unset";
+                  cur!.style.mixBlendMode = "unset";
             });
       });
 }
-attachHover("button,a,.pillar-card,.recog-pill,.quiz-opt,.prod-btn,.pledge-opt,.city-card,.principle");
+attachHover("button,a,li:has(a),.pillar-card,.recog-pill,.quiz-opt,.prod-btn,.pledge-opt,.city-card,.principle");

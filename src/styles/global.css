@@ -48,36 +48,20 @@
       /* ─── CUSTOM CURSOR ──────────────────────────────────────────────────── */
       #cur {
             position: fixed;
-            width: 10px;
-            height: 10px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
-            background: var(--green);
+            background-color: var(--green);
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
             transition:
-                  background 0.4s,
+                  background-color 0.4s,
                   transform 0.15s;
             mix-blend-mode: multiply;
       }
-      #cur-ring {
-            position: fixed;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: 1.5px solid var(--green);
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition:
-                  width 0.3s,
-                  height 0.3s,
-                  border-color 0.4s,
-                  opacity 0.3s;
-            opacity: 0.6;
-      }
       body.dark-mode #cur {
-            background: var(--amber);
+            background-color: var(--amber);
             mix-blend-mode: screen;
       }
       body.dark-mode #cur-ring {
