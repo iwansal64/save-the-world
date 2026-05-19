@@ -96,6 +96,19 @@
             margin: 0 auto;
             padding: 0 24px;
       }
+      /* The vertical connector line */
+      .lifecycle-track::before {
+            content: "";
+            position: absolute;
+            left: 51px; /* 24px padding + 27px (center of 56px icon) */
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 140, 0, 0.08) 10%, rgba(255, 140, 0, 0.25) 40%, rgba(45, 138, 78, 0.35) 70%, transparent 100%);
+            animation: connPulse 3s ease-in-out infinite;
+            z-index: 0;
+      }
+
       .stage-row {
             display: flex;
             gap: 32px;
