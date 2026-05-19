@@ -15,50 +15,60 @@ const questions = [
       {
             question: "Your favourite jacket has a hole. You...",
             options: [
-                  "Sew it up — or find a tailor. It's fixable.",
+                  "Sew it up or find a tailor. It's fixable.",
                   "Buy a replacement. It had a good run.",
                   "Buy a replacement AND keep the old one, just in case.",
-                  "You own 11 jackets. This is fine.",
+                  "I own 11 jackets. This is fine.",
             ],
             scores: [0, 1, 2, 3],
       },
       {
             question: "A sale notification pops up. Your first feeling is...",
             options: [
-                  "Mild curiosity — I'll check if I actually need something.",
-                  "Excitement. I deserve a treat.",
-                  "Anxiety. What if I miss out?",
-                  "Already opened the app before finishing this question.",
+                  "Mild curiosity. I'll check if I actually need something.",
+                  "Excitement! I deserve a treat.",
+                  "Anxiety.. What if I miss out?",
+                  "Already opened the app before finishing this question :/",
             ],
             scores: [0, 1, 2, 3],
       },
       {
             question: "The last thing you threw away was...",
-            options: ["Genuinely broken beyond any repair.", "Replaced by something newer.", "Honestly? It still worked fine.", "I don't really keep track of that."],
+            options: [
+                  "Genuinely broken beyond any repair item.",
+                  "Bought a replacement for it.",
+                  "I don't really keep track of that :)",
+                  "Honestly.. It still worked fine but I still replace it :/"
+            ],
             scores: [0, 1, 2, 3],
       },
       {
-            question: "How many clothes do you own with tags still on?",
+            question: "How many clothes that recently you bought?",
             options: [
                   "Zero. I only buy what I'll use.",
-                  "One or two — good intentions, wrong size.",
+                  "One or two. Good intentions, wrong size.",
                   "Three to five. A sale situation.",
-                  "More than five. This question is making me uncomfortable.",
+                  "Um.. More than five. I'm just too rich dawg :)",
             ],
             scores: [0, 1, 2, 3],
       },
       {
             question: "When you feel stressed or sad, you...",
-            options: ["Call a friend. Exercise. Sleep.", "Treat myself — I earned it.", "Browse online stores. Just browse.", "Wake up to packages I don't remember ordering."],
+            options: [
+                  "Play games, exercise, or sleep.",
+                  "Treat myself. Buy snacks or something. I earned it.",
+                  "Browse online stores. Just browse. :)",
+                  "Wake up with some packages I don't even remember ordering."
+            ],
             scores: [0, 1, 2, 3],
       },
       {
-            question: "Right now, you could name exactly how many clothes you own.",
+            question: "You're eating out and the portion is way too big. What actually happens to the leftovers?",
             options: [
-                  "Yes, roughly. I'm intentional about it.",
-                  "Somewhere between 40-80? Maybe.",
-                  "No idea. Probably more than I think.",
-                  "This question is making me uncomfortable and I'd like to leave.",
+                  "I always order less than I need. So, I don't have to think leftovers. (it's also cheaper that way ^^)",
+                  "I ask to take it home. Nothing gets left behind.",
+                  "I force myself to finish it even when I'm already full",
+                  `I leave it on the plate. "Someone will deal with it."`,
             ],
             scores: [0, 1, 2, 3],
       },
@@ -112,8 +122,8 @@ function renderQuestion() {
                               showResult();
                         }
                   });
-                  attachHover(".quiz-opt");
                   quizOptions!.appendChild(btn);
+                  attachHover(".quiz-opt");
             });
       }, 300);
 }
