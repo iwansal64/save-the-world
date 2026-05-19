@@ -284,6 +284,221 @@ import GapperTop from "./GapperTop.astro";
             font-size: 11px;
             color: var(--green);
       }
+
+      /* ═══════════════════════════════════════════════════════
+         SDG 12 REFERENCE BLOCK
+      ═══════════════════════════════════════════════════════ */
+      .sdg12-section {
+            max-width: 1100px;
+            margin: 120px auto 0;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+      }
+      .sdg12-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 48px;
+            border-bottom: 1px solid rgba(45, 138, 78, 0.2);
+            padding-bottom: 24px;
+            gap: 24px;
+            flex-wrap: wrap;
+      }
+      .sdg12-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 6px;
+            color: var(--green);
+            margin-bottom: 12px;
+      }
+      .sdg12-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1;
+            margin: 0;
+      }
+      .sdg12-title em {
+            font-style: italic;
+            color: var(--green);
+      }
+      .sdg12-badge {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 11px;
+            letter-spacing: 5px;
+            border: 1px solid rgba(45, 138, 78, 0.3);
+            color: var(--green);
+            padding: 8px 16px;
+            white-space: nowrap;
+            opacity: 0.8;
+      }
+
+      /* Hero insight strip */
+      .sdg12-hero {
+            background: rgba(45, 138, 78, 0.05);
+            border: 1px solid rgba(45, 138, 78, 0.12);
+            padding: 32px 40px;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+      }
+      .sdg12-hero-label {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 72px;
+            color: var(--green);
+            letter-spacing: 4px;
+            line-height: 1;
+            opacity: 0.6;
+            flex-shrink: 0;
+      }
+      .sdg12-hero-text {
+            font-family: "Lora", serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--muted-warm);
+      }
+      .sdg12-hero-text strong {
+            color: var(--text-dark);
+      }
+
+      /* Shifts grid — 2 columns */
+      .sdg12-shifts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-bottom: 2px;
+      }
+      .sdg12-shift {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(92, 61, 30, 0.08);
+            padding: 36px 40px;
+            backdrop-filter: blur(8px);
+            transition: background 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--sd, 0s),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--sd, 0s),
+                        background 0.3s;
+      }
+      .sdg12-shift.vis {
+            opacity: 1;
+            transform: translateY(0);
+      }
+      .sdg12-shift:nth-child(1) { --sd: 0s; }
+      .sdg12-shift:nth-child(2) { --sd: 0.08s; }
+      .sdg12-shift:nth-child(3) { --sd: 0.16s; }
+      .sdg12-shift:nth-child(4) { --sd: 0.24s; }
+      .sdg12-shift:hover {
+            background: rgba(255, 255, 255, 0.75);
+      }
+      .sdg12-shift-from-to {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+      }
+      .sdg12-tag {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
+            padding: 5px 12px;
+            text-transform: uppercase;
+      }
+      .sdg12-tag-from {
+            background: rgba(92, 61, 30, 0.06);
+            color: var(--muted-warm);
+      }
+      .sdg12-tag-to {
+            background: rgba(45, 138, 78, 0.08);
+            color: var(--green);
+            border: 1px solid rgba(45, 138, 78, 0.2);
+      }
+      .sdg12-arrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 12px;
+            color: var(--green);
+            opacity: 0.5;
+      }
+      .sdg12-shift-title {
+            font-family: "Playfair Display", serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+      }
+      .sdg12-shift-body {
+            font-family: "Lora", serif;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--muted-warm);
+      }
+      .sdg12-shift-body em {
+            color: var(--green);
+            font-style: italic;
+      }
+      .sdg12-shift-stat {
+            margin-top: 18px;
+            padding: 10px 14px;
+            border: 1px solid rgba(45, 138, 78, 0.12);
+            background: rgba(45, 138, 78, 0.03);
+            display: inline-block;
+      }
+      .sdg12-shift-stat span {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--green);
+      }
+
+      /* Bottom footer strip */
+      .sdg12-footer {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(92, 61, 30, 0.08);
+            padding: 24px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(8px);
+      }
+      .sdg12-footer-quote {
+            font-family: "Lora", serif;
+            font-size: 14px;
+            font-style: italic;
+            color: var(--muted-warm);
+            max-width: 560px;
+            line-height: 1.7;
+      }
+      .sdg12-footer-quote strong {
+            color: var(--text-dark);
+            font-style: normal;
+      }
+      .sdg12-footer-pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+      }
+      .sdg12-pill {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 8px;
+            letter-spacing: 3px;
+            padding: 4px 10px;
+            border: 1px solid rgba(45, 138, 78, 0.25);
+            color: var(--green);
+            text-transform: uppercase;
+      }
+
+      @media (max-width: 700px) {
+            .sdg12-shifts { grid-template-columns: 1fr; }
+            .sdg12-hero { flex-direction: column; gap: 16px; }
+            .sdg12-hero-label { font-size: 48px; }
+            .principle { grid-template-columns: 1fr; }
+      }
 </style>
 
 <!-- ════════════════════════════════
@@ -418,5 +633,108 @@ import GapperTop from "./GapperTop.astro";
                   </div>
             </div>
       </div>
+
+      <!-- ════════════════════════════════
+           SDG 12 REFERENCE BLOCK
+      ════════════════════════════════ -->
+      <div class="sdg12-section">
+
+            <div class="sdg12-header reveal">
+                  <div>
+                        <div class="sdg12-eyebrow">// SDG 12 · RESPONSIBLE CONSUMPTION & PRODUCTION</div>
+                        <h3 class="sdg12-title">THE <em>WEB'S</em> SHIFT</h3>
+                  </div>
+                  <div class="sdg12-badge">
+                        <span class="ink-stamp ink-stamp-green" style="--r:-1deg; opacity:0.6;">2030 AGENDA</span>
+                  </div>
+            </div>
+
+           
+            <!-- 4-shift grid -->
+            <div class="sdg12-shifts">
+
+                  <div class="sdg12-shift">
+                        <div class="sdg12-shift-from-to">
+                              <span class="sdg12-tag sdg12-tag-from">Carbon-heavy hosting</span>
+                              <span class="sdg12-arrow">→</span>
+                              <span class="sdg12-tag sdg12-tag-to">Renewable energy</span>
+                        </div>
+                        <div class="sdg12-shift-title">Power the Web Green</div>
+                        <div class="sdg12-shift-body">
+                              Data centres consume roughly 1–2% of global electricity. The shift is toward
+                              <em>renewable-powered infrastructure</em> — verified through tools like the Green Web Foundation — and holding cloud providers accountable for their energy mix.
+                        </div>
+                        <div class="sdg12-shift-stat"><span>↓ Data centres: ~1–2% of global electricity use</span></div>
+                  </div>
+
+                  <div class="sdg12-shift">
+                        <div class="sdg12-shift-from-to">
+                              <span class="sdg12-tag sdg12-tag-from">Bloated, inefficient code</span>
+                              <span class="sdg12-arrow">→</span>
+                              <span class="sdg12-tag sdg12-tag-to">Lean, low-emission code</span>
+                        </div>
+                        <div class="sdg12-shift-title">Carbon Budgets for Every Page</div>
+                        <div class="sdg12-shift-body">
+                              The average web page is <em>3× heavier than in 2010</em>. Every unused script, oversized image, and redundant API call has a carbon cost.
+                              Teams are now setting page-weight budgets alongside performance budgets.
+                        </div>
+                        <div class="sdg12-shift-stat"><span>↑ Avg page weight 3× heavier than 2010</span></div>
+                  </div>
+
+                  <div class="sdg12-shift">
+                        <div class="sdg12-shift-from-to">
+                              <span class="sdg12-tag sdg12-tag-from">Endless scroll & dark patterns</span>
+                              <span class="sdg12-arrow">→</span>
+                              <span class="sdg12-tag sdg12-tag-to">Intentional UX</span>
+                        </div>
+                        <div class="sdg12-shift-title">Design Against Overconsumption</div>
+                        <div class="sdg12-shift-body">
+                              Dark patterns manufacture desire the same way fast fashion does. <em>Digital sobriety</em> in UX means designing for genuine need —
+                              not maximising time-on-site at the cost of planet and wellbeing.
+                        </div>
+                        <div class="sdg12-shift-stat"><span>→ UX as a tool for sustainable behaviour</span></div>
+                  </div>
+
+                  <div class="sdg12-shift">
+                        <div class="sdg12-shift-from-to">
+                              <span class="sdg12-tag sdg12-tag-from">Opaque device supply chains</span>
+                              <span class="sdg12-arrow">→</span>
+                              <span class="sdg12-tag sdg12-tag-to">Circular & ethical</span>
+                        </div>
+                        <div class="sdg12-shift-title">Build for Longevity, Not Landfill</div>
+                        <div class="sdg12-shift-body">
+                              50 million tonnes of e-waste are generated annually. The shift is toward <em>software that runs on older hardware</em>,
+                              repairability by design (see Fairphone), and transparent sourcing of the minerals that power the web.
+                        </div>
+                        <div class="sdg12-shift-stat"><span>↑ 50M tonnes of e-waste generated per year</span></div>
+                  </div>
+
+            </div>
+
+            <!-- Footer strip -->
+            <div class="sdg12-footer">
+                  <p class="sdg12-footer-quote">
+                        <strong>The most sustainable website is one that loads fast, does its job, and gets out of the way.</strong>
+                        Responsibility in digital production isn't a trend — it's the only credible path to 2030.
+                  </p>
+                  <div class="sdg12-footer-pills">
+                        <span class="sdg12-pill">Green Hosting</span>
+                        <span class="sdg12-pill">Lean Code</span>
+                        <span class="sdg12-pill">Digital Sobriety</span>
+                        <span class="sdg12-pill">E-Waste</span>
+                  </div>
+            </div>
+
+      </div>
+
 </section>
 <GapperBottom />
+
+<script>
+      // Intersection observer — shared for .principle and .sdg12-shift
+      const obs = new IntersectionObserver(
+            (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("vis"); obs.unobserve(e.target); } }),
+            { threshold: 0.15 }
+      );
+      document.querySelectorAll(".principle, .sdg12-shift").forEach((el) => obs.observe(el));
+</script>
