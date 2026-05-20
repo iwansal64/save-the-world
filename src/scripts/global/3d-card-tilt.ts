@@ -28,5 +28,4 @@ function addTilt(selector: string, strength = 7) {
 addTilt('.pillar-card', 5);
 addTilt('.stat-card-dark', 4);
 addTilt('.principle', 3);
-// City cards: tilt only (no scale, they're fixed width in carousel)
 addTilt('.city-card', 4);

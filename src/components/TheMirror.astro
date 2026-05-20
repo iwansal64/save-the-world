@@ -17,7 +17,7 @@ const length = mirrorItems.length;
             <div id="mirror-wrapper">
                   <div id="mirror-container">
                         {mirrorItems.map((value, index) => {
-                              return <div class="mirror-svg-wrap" style={"overflow: hidden; position: absolute; transform-origin: center; transform: rotateY(" + ((index + 1) / length) * 360 + "deg) translateZ(400px) translateY(-50%); backface-visibility: hidden; animation-delay: " + (-index * 3 - 2.5) + "s;"} id="mirror-svg-wrap">
+                              return <div class="mirror-svg-wrap" style={"overflow: hidden; position: absolute; transform-origin: center; transform: rotateY(" + ((index + 1) / length) * 360 + "deg) translateZ(400px) translateY(-35%); backface-visibility: hidden; animation-delay: " + (-index * 3 - 2.5) + "s;"} id="mirror-svg-wrap">
                                     <div class="reflection w-3/5 aspect-4/5 rounded-full fixed top-1/2 -translate-1/2 bg-(--amber) opacity-20" style={"animation-delay: " + (-index * 3 - 1) + "s;"}></div>
                                     <svg width="280" height="360" style="transform-box: fill-box;" viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg">
                                           <!-- Frame outer -->
@@ -49,6 +49,7 @@ const length = mirrorItems.length;
                               </div>;
                         })}
                   </div>
+                  <div class="w-full h-40 rounded-full bg-radial from-0% to-50% from-(--amber)/20 to-(--amber)/0 animate-[pulse_4s_infinite] "></div>
             </div>
 
             <div class="relative left-1/2 -translate-x-1/2 mb-28 w-4/5 h-0.5 bg-linear-to-r from-(--amber)/10 via-(--amber)/50 to-(--amber)/10"></div>
@@ -950,13 +951,20 @@ const length = mirrorItems.length;
       .mf-2 { top: 40%; right: -8%; font-size: 90px; transform: rotate(8deg); }
       .mf-3 { bottom: 15%; left: 5%; font-size: 80px; transform: rotate(-3deg); }
 
-      #mirror-wrapper { position: relative; width: 100%; height: max-content; }
+      #mirror-wrapper { 
+            position: relative; 
+            width: 100%; 
+            height: max-content;
+            margin-bottom: 250px;
+      }
       #mirror-container {
-            width: 300px; height: 300px;
-            position: relative; left: 50%;
+            width: 300px;
+            height: 300px;
+            position: relative;
+            left: 50%;
             transform-style: preserve-3d;
             transform-origin: center;
-            margin-top: 400px; margin-bottom: 250px;
+            margin-top: 400px;
             animation-name: mirror-animation;
             animation-timing-function: linear;
             animation-duration: 20s;
