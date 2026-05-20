@@ -1,4 +1,8 @@
 ---
+/* ═══════════════════════════════════════════════════════
+SECTION 3 — THE NUMBERS
+═══════════════════════════════════════════════════════ */
+
 const pileItems: {
       w: number;
       h: number;
@@ -23,9 +27,6 @@ const pileItems: {
 ---
 
 <style>
-      /* ═══════════════════════════════════════════════════════
-      SECTION 3 — THE NUMBERS
-      ═══════════════════════════════════════════════════════ */
       #numbers {
             position: relative;
             background: var(--black);
@@ -397,10 +398,7 @@ const pileItems: {
       }
 </style>
 
-<!-- ════════════════════════════════
-     S3 — THE NUMBERS
-════════════════════════════════ -->
-<section id="numbers" class="grain-dark">
+<section id="numbers">
       <div class="spotlight"></div>
       <div class="numbers-header">
             <div id="waste-ticker">
@@ -416,37 +414,49 @@ const pileItems: {
       </div>
       <div class="stat-grid">
             <div class="stat-card-dark" style="--d:0s">
-                  <div class="stat-num-big" data-target="5000" data-prefix="$" data-suffix="">0</div><div class="stat-unit-label">PER PERSON / YEAR</div><div class="stat-context">
+                  <div class="stat-num-big" data-target="5000" data-prefix="$" data-suffix="">0</div>
+                  <div class="stat-unit-label">PER PERSON / YEAR</div>
+                  <div class="stat-context">
                         Spent on <strong>impulse purchases alone.</strong> Not food. Not rent. Things bought on a feeling that faded before the package arrived.
                         <div class="stat-ring-wrap"><div class="stat-ring"></div><div class="stat-ring"></div><div class="stat-ring"></div></div>
                   </div>
             </div>
             <div class="stat-card-dark" style="--d:0.08s">
-                  <div class="stat-num-big" data-target="1" data-prefix="" data-suffix=" TRUCK">0</div><div class="stat-unit-label">EVERY SECOND</div><div class="stat-context">
+                  <div class="stat-num-big" data-target="1" data-prefix="" data-suffix=" TRUCK">0</div>
+                  <div class="stat-unit-label">EVERY SECOND</div>
+                  <div class="stat-context">
                         A garbage truck of <strong>textiles is wasted</strong> globally every second. Fast fashion doesn't just move fast. It disappears fast.
                         <div class="stat-ring-wrap"><div class="stat-ring"></div><div class="stat-ring"></div><div class="stat-ring"></div></div>
                   </div>
             </div>
             <div class="stat-card-dark" style="--d:0.16s">
-                  <div class="stat-num-big" data-target="33" data-prefix="" data-suffix="%">0</div><div class="stat-unit-label">OF ALL FOOD PRODUCED</div><div class="stat-context">
+                  <div class="stat-num-big" data-target="33" data-prefix="" data-suffix="%">0</div>
+                  <div class="stat-unit-label">OF ALL FOOD PRODUCED</div>
+                  <div class="stat-context">
                         <strong>1.3 billion tonnes of food</strong> wasted annually — while 820 million people go to bed hungry. Every night.
                         <div class="stat-ring-wrap"><div class="stat-ring"></div><div class="stat-ring"></div><div class="stat-ring"></div></div>
                   </div>
             </div>
             <div class="stat-card-dark" style="--d:0.24s">
-                  <div class="stat-num-big" data-target="2700" data-prefix="" data-suffix="L">0</div><div class="stat-unit-label">OF WATER</div><div class="stat-context">
+                  <div class="stat-num-big" data-target="2700" data-prefix="" data-suffix="L">0</div>
+                  <div class="stat-unit-label">OF WATER</div>
+                  <div class="stat-context">
                         To make <strong>one cotton t-shirt.</strong> That's 2.5 years of drinking water. You wore it seven times. Then forgot it existed.
                         <div class="stat-ring-wrap"><div class="stat-ring"></div><div class="stat-ring"></div><div class="stat-ring"></div></div>
                   </div>
             </div>
             <div class="stat-card-dark" style="--d:0.32s">
-                  <div class="stat-num-big" data-target="73" data-prefix="" data-suffix="%">0</div><div class="stat-unit-label">OF CLOTHING</div><div class="stat-context">
+                  <div class="stat-num-big" data-target="73" data-prefix="" data-suffix="%">0</div>
+                  <div class="stat-unit-label">OF CLOTHING</div>
+                  <div class="stat-context">
                         Ends up in <strong>landfill or incinerated.</strong> The "circular" economy hasn't arrived yet. Linear production is still the default — and we're paying for it.
                         <div class="stat-ring-wrap"><div class="stat-ring"></div><div class="stat-ring"></div><div class="stat-ring"></div></div>
                   </div>
             </div>
             <div class="stat-card-dark" style="--d:0.4s">
-                  <div class="stat-num-big" data-target="10" data-prefix="" data-suffix="%">0</div><div class="stat-unit-label">OF GLOBAL CO₂ EMISSIONS</div><div class="stat-context">
+                  <div class="stat-num-big" data-target="10" data-prefix="" data-suffix="%">0</div>
+                  <div class="stat-unit-label">OF GLOBAL CO₂ EMISSIONS</div>
+                  <div class="stat-context">
                         Come from <strong>fashion alone</strong> — more than international aviation and shipping combined. The most polluting thing in your wardrobe isn't the car outside.
                         <div class="stat-ring-wrap"><div class="stat-ring"></div><div class="stat-ring"></div><div class="stat-ring"></div></div>
                   </div>
@@ -490,40 +500,6 @@ const pileItems: {
 </section>
 
 <script is:inline defer>
-      /* ═══════════════════════════════ STAT COUNTERS ═══════════════════════════════ */
-      function animCount(el) {
-            const target = parseFloat(el.dataset.target);
-            const prefix = el.dataset.prefix || "";
-            const suffix = el.dataset.suffix || "";
-            const dur = 2000;
-            const start = performance.now();
-            function tick(now) {
-                  const p = Math.min((now - start) / dur, 1);
-                  const e = 1 - Math.pow(1 - p, 3);
-                  const v = e * target;
-                  el.textContent = prefix + (target >= 1000 ? Math.round(v).toLocaleString() : target < 5 ? v.toFixed(0) : Math.round(v)) + suffix;
-                  if (p < 1) requestAnimationFrame(tick);
-                  else el.textContent = prefix + (target >= 1000 ? target.toLocaleString() : target) + suffix;
-            }
-            requestAnimationFrame(tick);
-      }
-      const cob = new IntersectionObserver(
-            (entries) => {
-                  entries.forEach((e) => {
-                        if (!e.isIntersecting) return;
-                        e.target.classList.add("vis");
-                        const numEl = e.target.querySelector("[data-target]");
-                        if (numEl && !numEl.dataset.counted) {
-                              animCount(numEl);
-                              numEl.dataset.counted = "1";
-                        }
-                        cob.unobserve(e.target);
-                  });
-            },
-            { threshold: 0.2 },
-      );
-      document.querySelectorAll(".stat-card-dark").forEach((el) => cob.observe(el));
-
       /* ═══════════════════════════════ THE PILE ═══════════════════════════════ */
       const pileOb = new IntersectionObserver(
             (entries) => {

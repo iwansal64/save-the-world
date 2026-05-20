@@ -2,7 +2,7 @@ import { setCurrentSectionIndex } from "./sidebar-navigation";
 
 /* ═══════════════════════════════ DARK MODE BY SECTION + SECTION TRACKER ═══════════════════════════════ */
 const warmSections = ["truth", "shift"];
-const allSections = ["hero", "truth", "mirror", "numbers", "quiz", "lifecycle", "shift", "pledge"];
+const allSections = ["hero", "truth", "mirror", "quiz", "numbers", "problem", "lifecycle", "shift", "pledge"];
 const sectionObserver = new IntersectionObserver(
       (entries) => {
             entries.forEach((e) => {

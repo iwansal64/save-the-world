@@ -25,4 +25,4 @@ export function attachHover(sel: string) {
             });
       });
 }
-attachHover("button,a,li:has(a),.pillar-card,.recog-pill,.prod-btn,.pledge-opt,.city-card,.principle,.stat-card-dark,#dooming-span");
+attachHover("button,a,li:has(a),.pillar-card,.recog-pill,.prod-btn,.pledge-opt,.city-card,.principle,.stat-card-dark,#dooming-span,.hover-item,.pull-quote-strip");
