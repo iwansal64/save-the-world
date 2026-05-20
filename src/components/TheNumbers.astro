@@ -1,5 +1,25 @@
 ---
-
+const pileItems: {
+      w: number;
+      h: number;
+      bg: string;
+      label: string;
+      title: string;
+      comment?: string;
+}[] = [
+      { w: 60, h: 40, bg: "#1a1208", label: "👕", title: "Clothing" },
+      { w: 30, h: 50, bg: "#1a1208", label: "📱", title: "Electronics" },
+      { w: 70, h: 25, bg: "#0f1a0f", label: "🍎", title: "Food", comment: "You bought this everyday" },
+      { w: 40, h: 60, bg: "#1a0f0f", label: "🧴", title: "Cosmetics" },
+      { w: 80, h: 30, bg: "#1a1208", label: "👗", title: "Fast Fashion" },
+      { w: 35, h: 45, bg: "#0f0f1a", label: "🎮", title: "Electronics" },
+      { w: 55, h: 35, bg: "#1a1208", label: "📦", title: "Packaging" },
+      { w: 45, h: 55, bg: "#1a0f08", label: "🥤", title: "Plastic" },
+      { w: 65, h: 20, bg: "#1a1208", label: "📚", title: "Paper" },
+      { w: 50, h: 65, bg: "#0f1a0f", label: "🌿", title: "Organics" },
+      { w: 75, h: 28, bg: "#1a1208", label: "👟", title: "Footwear" },
+      { w: 38, h: 48, bg: "#1a1208", label: "⌚", title: "Accessories" },
+];
 ---
 
 <style>
@@ -75,6 +95,51 @@
             font-size: 15px;
             color: rgba(240, 237, 232, 0.35);
             font-style: italic;
+      }
+
+      /* ── LIVE WASTE TICKER ───────────────────────────── */
+      #waste-ticker {
+            position: relative;
+            z-index: 12;
+            max-width: 700px;
+            margin: -20px auto 60px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+      }
+      .ticker-inner {
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            background: rgba(255, 69, 0, 0.04);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            font-size: 12px;
+      }
+      .ticker-label {
+            font-family: "JetBrains Mono", monospace;
+            letter-spacing: 3px;
+            color: var(--ember);
+            opacity: 0.7;
+            white-space: nowrap;
+      }
+      #ticker-count {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 34px;
+            letter-spacing: 2px;
+            color: var(--ember);
+            text-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
+            width: max-content;
+            text-align: center;
+            transition: none;
+      }
+      .ticker-unit {
+            font-family: "JetBrains Mono", monospace;
+            letter-spacing: 3px;
+            color: rgba(255, 69, 0, 0.6);
+            white-space: nowrap;
       }
 
       /* Stat cards grid */
@@ -207,7 +272,6 @@
             font-size: 9px;
             letter-spacing: 5px;
             color: var(--amber);
-            margin-bottom: 40px;
             opacity: 0.6;
       }
       .pile-wrap {
@@ -218,21 +282,28 @@
             justify-content: center;
             gap: 4px;
             overflow: visible;
+            margin-bottom: 40px;
       }
       .pile-item {
             flex-shrink: 0;
             border-radius: 3px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition:
-                  opacity 0.5s,
-                  transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transition-delay: var(--pd, 0s);
-            animation: floatWaste 4s ease-in-out infinite var(--pd, 0s);
+            animation: floatWaste 1s ease-in-out infinite var(--pd, 0s);
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            color: var(--amber);
+            padding: 4px;
+            position: relative;
       }
-      .pile-item.vis {
-            opacity: 1;
-            transform: translateY(0);
+      .pile-item-label {
+            font-size: 24px;
+      }
+      .pile-item-title {
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translate(-50%, 100%);
+            font-size: 8px;
       }
       .pile-bottom-text {
             font-family: "Playfair Display", serif;
@@ -250,6 +321,80 @@
             letter-spacing: 2px;
             vertical-align: middle;
       }
+
+      @keyframes floatWaste {
+            0%,
+            100% {
+                  margin-bottom: 0px;
+            }
+            50% {
+                  margin-bottom: 2px;
+            }
+      }
+
+      /* Quote Strip */
+      .pull-quote-strip {
+            margin: 160px 0;
+            position: relative;
+            z-index: 12;
+            overflow: hidden;
+            padding: 80px 0;
+            background: var(--amber);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+      }
+      .pull-quote-strip::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0, 0, 0, 0.04) 8px, rgba(0, 0, 0, 0.04) 9px);
+      }
+      .pqs-eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 6px;
+            color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+      }
+      .pqs-text {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(28px, 5vw, 64px);
+            font-weight: 900;
+            color: #000;
+            line-height: 1.1;
+            max-width: 900px;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+      }
+      .pqs-text em {
+            font-style: normal;
+            position: relative;
+      }
+      .pqs-text em::after {
+            content: "";
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.3);
+      }
+      .pqs-sub {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: rgba(0, 0, 0, 0.4);
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+      }
 </style>
 
 <!-- ════════════════════════════════
@@ -258,6 +403,13 @@
 <section id="numbers" class="grain-dark">
       <div class="spotlight"></div>
       <div class="numbers-header">
+            <div id="waste-ticker">
+                  <div class="ticker-inner vis" id="ticker-inner">
+                        <div class="ticker-label">TEXTILE WASTE SINCE YOU OPENED THIS PAGE</div>
+                        <div id="ticker-count">4,537,374 KG</div>
+                        <div class="ticker-unit">OF FABRIC DISCARDED</div>
+                  </div>
+            </div>
             <div class="numbers-eyebrow reveal">// THE PILE WE BUILT</div>
             <h2 class="numbers-title reveal">THE NUMBERS<br /><em>DON'T LIE.</em></h2>
             <p class="numbers-sub reveal">These aren't statistics. They're consequences.</p>
@@ -303,13 +455,37 @@
 
       <!-- THE PILE -->
       <div class="pile-section">
-            <div class="pile-label reveal">// THIS IS WHAT ONE YEAR LOOKS LIKE</div>
-            <div class="pile-wrap" id="pile-wrap">
-                  <!-- Pile items generated by JS -->
-            </div>
             <p class="pile-bottom-text reveal">
                   Every item below represents a real category of waste generated globally in a single year. The pile doesn't fit on this page. <em>THAT'S THE POINT.</em>
             </p>
+            <div class="pile-label reveal">// THIS IS WHAT ONE YEAR LOOKS LIKE</div>
+            <div class="pile-wrap" id="pile-wrap">
+                  <div class="pile-wrap" id="pile-wrap" data-astro-cid-lqo6m2gl="">
+                        <!-- Pile items generated by JS -->
+                        {
+                              pileItems.map((item, index) => {
+                                    return (
+                                          <>
+                                                <div class="pile-item" style={`height: ${item.h * 3}px; width: ${item.w}; background: ${item.bg}; --pd: ${(index * 0.31) % 4}s;`} title={item.title}>
+                                                      <>
+                                                            <p class="pile-item-label">{item.label}</p>
+                                                            <p class="pile-item-title">{item.title}</p>
+                                                      </>
+                                                </div>
+                                          </>
+                                    );
+                              })
+                        }
+                  </div>
+            </div>
+      </div>
+      <div class="pull-quote-strip">
+            <div class="pqs-eyebrow">// THE UNCOMFORTABLE TRUTH</div>
+            <div class="pqs-text">
+                  The fashion industry produces <em>100 billion</em> garments a year.<br />
+                  There are 8 billion people on Earth.
+            </div>
+            <div class="pqs-sub">THAT'S 12.5 ITEMS PER PERSON. PER YEAR. EVERY YEAR.</div>
       </div>
 </section>
 
@@ -349,28 +525,6 @@
       document.querySelectorAll(".stat-card-dark").forEach((el) => cob.observe(el));
 
       /* ═══════════════════════════════ THE PILE ═══════════════════════════════ */
-      const pileItems = [
-            { w: 60, h: 40, bg: "#1a1208", label: "👕", title: "Clothing" },
-            { w: 30, h: 50, bg: "#1a1208", label: "📱", title: "Electronics" },
-            { w: 70, h: 25, bg: "#0f1a0f", label: "🍎", title: "Food" },
-            { w: 40, h: 60, bg: "#1a0f0f", label: "🧴", title: "Cosmetics" },
-            { w: 80, h: 30, bg: "#1a1208", label: "👗", title: "Fast Fashion" },
-            { w: 35, h: 45, bg: "#0f0f1a", label: "🎮", title: "Electronics" },
-            { w: 55, h: 35, bg: "#1a1208", label: "📦", title: "Packaging" },
-            { w: 45, h: 55, bg: "#1a0f08", label: "🥤", title: "Plastic" },
-            { w: 65, h: 20, bg: "#1a1208", label: "📚", title: "Paper" },
-            { w: 50, h: 65, bg: "#0f1a0f", label: "🌿", title: "Organics" },
-            { w: 75, h: 28, bg: "#1a1208", label: "👟", title: "Footwear" },
-            { w: 38, h: 48, bg: "#1a1208", label: "⌚", title: "Accessories" },
-      ];
-      const pile = document.getElementById("pile-wrap");
-      pileItems.forEach((item, i) => {
-            const div = document.createElement("div");
-            div.className = "pile-item";
-            div.style.cssText = `width:${item.w}px;height:${item.h}px;background:${item.bg};border:1px solid #2a2a2a;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:16px;align-self:flex-end;--pd:${i * 0.06}s;--r:${(Math.random() - 0.5) * 20}deg;align-self:flex-end;`;
-            div.innerHTML = `<span style="font-size:14px;opacity:0.6" title="${item.title}">${item.label}</span>`;
-            pile.appendChild(div);
-      });
       const pileOb = new IntersectionObserver(
             (entries) => {
                   entries.forEach((e) => {
