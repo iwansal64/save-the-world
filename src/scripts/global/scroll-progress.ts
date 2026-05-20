@@ -2,5 +2,5 @@
 const spb = document.getElementById("spb");
 window.addEventListener("scroll", () => {
       const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      spb!.style.width = `${pct}%`;
+      spb!.style.height = `${pct}%`;
 });

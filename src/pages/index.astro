@@ -11,7 +11,7 @@ import TheLifeCycle from "../components/TheLifeCycle.astro";
 import TheShift from "../components/TheShift.astro";
 import ThePledge from "../components/ThePledge.astro";
 import Footer from "../components/Footer.astro";
-import TheFact from "../components/TheFact.astro";
+import TheTruth from "../components/TheTruth.astro";
 ---
 
 <!doctype html>
@@ -29,14 +29,13 @@ import TheFact from "../components/TheFact.astro";
       </head>
       <body>
             <div id="cur"></div>
-            <div id="cur-ring"></div>
             <div id="spb"></div>
 
             <Navbar />
             <SidebarNavigation />
             <Hero />
 
-            <TheFact />
+            <TheTruth />
             <TheMirror />
             <TheNumbers />
             <TheQuiz />
@@ -49,5 +48,6 @@ import TheFact from "../components/TheFact.astro";
             <script src="../scripts/global/darkmode-each-section.ts"></script>
             <script src="../scripts/global/scroll-progress.ts"></script>
             <script src="../scripts/global/universal-reveal-objects.ts"></script>
+            <script src="../scripts/global/3d-card-tilt.ts"></script>
       </body>
 </html>

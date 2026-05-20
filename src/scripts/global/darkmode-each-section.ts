@@ -3,8 +3,8 @@ const sidebarLinks: Element[] = [];
 Array.from(document.getElementById("sidebar-navigation")!.children || []).forEach((element) => {
       sidebarLinks.push(element);
 });
-const warmSections = ["fact", "shift"];
-const allSections = ["hero", "fact", "mirror", "numbers", "quiz", "lifecycle", "shift", "pledge"];
+const warmSections = ["truth", "shift"];
+const allSections = ["hero", "truth", "mirror", "numbers", "quiz", "lifecycle", "shift", "pledge"];
 let previousSectionIndex = -1;
 const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -20,7 +20,6 @@ const sectionObserver = new IntersectionObserver(
                         if (currentSectionIndex > previousSectionIndex) {
                               sidebarLinks[currentSectionIndex]!.classList.toggle("active", true);
                         }
-                        console.log(id);
                         previousSectionIndex = currentSectionIndex;
                   }
             });
