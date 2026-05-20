@@ -1,7 +1,8 @@
 ---
 import "../styles/global.css";
 
-import SidebarNavigation from "../components/SidebarNavigation.svelte";
+import SidebarNavigation from "../components/SidebarNavigation.astro";
+import SidebarNavigationMobile from "../components/SidebarNavigationMobile.astro";
 import Navbar from "../components/Navbar.astro";
 import Hero from "../components/Hero.astro";
 import TheMirror from "../components/TheMirror.astro";
@@ -33,6 +34,7 @@ import TheTruth from "../components/TheTruth.astro";
 
             <Navbar />
             <SidebarNavigation />
+            <SidebarNavigationMobile />
             <Hero />
 
             <TheTruth />
