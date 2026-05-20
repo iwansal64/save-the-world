@@ -89,5 +89,5 @@ setTimeout(() => {
                   // Cart animation starts
                   startsCounting();
             }
-      }, /**90 */ 0);
-}, /** 2000 */ 0);
+      }, 90);
+}, 2000);
